@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>用户行为档案 | 心理侧写报告 · 全息矩阵</title>
+    <style>
+.project-info-icon {
+    cursor: pointer;
+    user-select: none;
+}
+        /* 完整样式（与之前完全相同，省略重复以节省篇幅，实际输出会包含全部） */
+        :root {
+            --bg-body: #080a0e; --bg-dossier: rgba(22, 24, 30, 0.7); --bg-card: rgba(18, 20, 26, 0.55);
+            --glass-card: rgba(255, 255, 255, 0.06); backdrop-filter: blur(4px);--glass-card-hover: rgba(255, 255, 255, 0.1);
+            --text-primary: #d4d4d4; --text-secondary: #9a9da6; --text-muted: #6b6e78; --text-heading: #e0e0e6;
+            --border-dark: rgba(60, 63, 75, 0.5); --border-medium: rgba(80, 83, 95, 0.4);
+            --shadow-dossier: 0 0 0 1px rgba(60, 63, 75, 0.5), 0 0 0 8px rgba(8, 10, 14, 0.8), 0 0 0 9px rgba(60, 63, 75, 0.4), 0 20px 60px rgba(0, 0, 0, 0.7);
+            --glow-1: rgba(180, 140, 60, 0.1); --glow-2: rgba(200, 60, 40, 0.06); --glow-3: rgba(59, 111, 182, 0.05);
+            --stamp-glow: rgba(200, 40, 30, 0.15); --tag-bg-evidence: rgba(180, 140, 60, 0.1);
+            --tag-bg-warning: rgba(200, 60, 40, 0.1); --tag-bg-insight: rgba(59, 111, 182, 0.1);
+            --timeline-line: rgba(80, 83, 95, 0.5); --strategy-bg: rgba(10, 12, 16, 0.6);
+            --anchor-card-bg: rgba(180, 140, 60, 0.06); --footer-bg: rgba(0, 0, 0, 0.25); --redacted-bg: #1a1c22;
+            --divider-color: rgba(255, 255, 255, 0.04); --mugshot-bg: #0d0f13; --seal-top-bg: rgba(26, 28, 34, 0.7);
+            --blur-dossier: 14px; --blur-card: 8px; --transition-speed: 0.5s;
+            --sketch-line: #b0b3bc; --sketch-line-dim: #6b6e78; --sketch-fill: rgba(180, 185, 195, 0.06);
+            --sketch-grid: rgba(255, 255, 255, 0.03); --sketch-accent: #e74c3c; --sketch-accent-dim: rgba(231, 76, 60, 0.5);
+            --sketch-label-bg: rgba(13, 15, 19, 0.7); --radar-grid: rgba(255, 255, 255, 0.08);
+            --radar-fill-1: rgba(59, 111, 182, 0.25); --radar-fill-2: rgba(180, 140, 60, 0.25); --radar-fill-3: rgba(231, 76, 60, 0.3);
+            --matrix-node-bg: rgba(20, 22, 28, 0.7); --contrast-bar-bg: rgba(10, 12, 16, 0.7);
+            --accent-red: #c0392b; --accent-red-bright: #e74c3c; --accent-gold: #b8963e; --accent-amber: #d4a843;
+            --stamp-red: #8b1a1a; --stamp-red-light: #a82828; --ink-blue: #3b6fb6; --purple-accent: #a07cd5;
+            --typewriter: 'Courier New', 'Source Code Pro', 'Fira Code', 'Consolas', monospace;
+            --sans: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', -apple-system, sans-serif;
+            --platform-bg: #FFFDD4; --platform-text: #8CEEF5; --info-font-size: 12px; --timeline-font-size: 12px;
+        }
+        body.light-mode {
+            --bg-body: #D4FCF6; --bg-dossier: rgba(255, 255, 255, 0.5); --bg-card: rgba(255, 255, 255, 0.4);
+            --glass-card: rgba(255, 255, 255, 0.35); --glass-card-hover: rgba(255, 255, 255, 0.55);
+            --text-primary: #1a1c24; --text-secondary: #4a4d58; --text-muted: #6b6e78; --text-heading: #1a1c24;
+            --border-dark: rgba(160, 165, 175, 0.45); --border-medium: rgba(140, 145, 155, 0.35);
+            --shadow-dossier: 0 0 0 1px rgba(160, 165, 175, 0.4), 0 0 0 8px rgba(200, 220, 218, 0.7), 0 0 0 9px rgba(160, 165, 175, 0.3), 0 20px 60px rgba(0, 0, 0, 0.15);
+            --glow-1: rgba(180, 150, 100, 0.2); --glow-2: rgba(200, 140, 120, 0.15); --glow-3: rgba(100, 150, 200, 0.12);
+            --stamp-glow: rgba(200, 40, 30, 0.2); --tag-bg-evidence: rgba(180, 140, 60, 0.15);
+            --tag-bg-warning: rgba(200, 60, 40, 0.12); --tag-bg-insight: rgba(59, 111, 182, 0.12);
+            --timeline-line: rgba(160, 165, 175, 0.45); --strategy-bg: rgba(240, 242, 245, 0.55);
+            --anchor-card-bg: rgba(180, 140, 60, 0.08); --footer-bg: rgba(240, 242, 245, 0.4); --redacted-bg: #dde0e3;
+            --divider-color: rgba(0, 0, 0, 0.04); --mugshot-bg: #e8ecef; --seal-top-bg: rgba(255, 255, 255, 0.45);
+            --sketch-line: #4a4d58; --sketch-line-dim: #8a8d96; --sketch-fill: rgba(80, 85, 95, 0.04);
+            --sketch-grid: rgba(0, 0, 0, 0.03); --sketch-accent: #c0392b; --sketch-accent-dim: rgba(192, 57, 43, 0.4);
+            --sketch-label-bg: rgba(240, 242, 245, 0.7); --radar-grid: rgba(0, 0, 0, 0.08);
+            --radar-fill-1: rgba(59, 111, 182, 0.2); --radar-fill-2: rgba(180, 140, 60, 0.2); --radar-fill-3: rgba(231, 76, 60, 0.22);
+            --matrix-node-bg: rgba(255, 255, 255, 0.45); --contrast-bar-bg: rgba(240, 242, 245, 0.55);
+            --platform-bg: #FFFDD4; --platform-text: #369FF7;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background-color: var(--bg-body); font-family: var(--sans); color: var(--text-primary); min-height: 100vh; display: flex; justify-content: center; align-items: flex-start; padding: 20px 0 40px; position: relative; transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease; background-image: radial-gradient(ellipse at 18% 12%, var(--glow-1) 0%, transparent 55%), radial-gradient(ellipse at 78% 48%, var(--glow-2) 0%, transparent 50%), radial-gradient(ellipse at 45% 82%, var(--glow-3) 0%, transparent 48%); background-attachment: fixed; }
+        .bg-orb { position: fixed; border-radius: 50%; pointer-events: none; z-index: 0; filter: blur(60px); opacity: 0.5; }
+        .bg-orb.orb-1 { width: 320px; height: 320px; top: -80px; left: -60px; background: var(--glow-1); }
+        .bg-orb.orb-2 { width: 280px; height: 280px; bottom: -60px; right: -40px; background: var(--glow-2); }
+        .bg-orb.orb-3 { width: 240px; height: 240px; top: 40%; left: 55%; background: var(--glow-3); }
+        .dossier { width: 95vw; max-width: 95vw; background: var(--bg-dossier); -webkit-backdrop-filter: blur(var(--blur-dossier)); backdrop-filter: blur(var(--blur-dossier)); border: 1px solid var(--border-dark); border-radius: 3px; position: relative; z-index: 1; box-shadow: var(--shadow-dossier); overflow: hidden; }
+        .dossier::before { content: ''; position: absolute; inset: 0; pointer-events: none; z-index: 1; background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255, 255, 255, 0.002) 2px, rgba(255, 255, 255, 0.002) 4px); opacity: 0.5; }
+        .dossier::after { content: ''; position: absolute; inset: 0; pointer-events: none; z-index: 0; opacity: 0.025; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E"); }
+        .dossier-top-seal { position: relative; z-index: 3; background: var(--seal-top-bg); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); border-bottom: 2px double var(--border-medium); padding: 14px 24px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+        .seal-left { font-family: var(--typewriter); font-size: 10px; color: var(--text-muted); letter-spacing: 2px; }
+        .status-dot { width: 7px; height: 7px; border-radius: 50%; background: #e74c3c; animation: blink 1.5s infinite; display: inline-block; }
+        @keyframes blink { 0%,100% { opacity: 1; box-shadow: 0 0 6px rgba(231, 76, 60, 0.6); } 50% { opacity: 0.3; box-shadow: 0 0 2px rgba(231, 76, 60, 0.2); } }
+        .seal-wax-mark { position: absolute; bottom: -14px; left: 50%; transform: translateX(-50%); z-index: 5; width: 56px; height: 22px; background: var(--stamp-red); border-radius: 3px; box-shadow: 0 0 0 3px rgba(8, 10, 14, 0.7), 0 0 0 5px var(--stamp-red), 0 3px 10px rgba(0, 0, 0, 0.5); }
+        body.light-mode .seal-wax-mark { box-shadow: 0 0 0 3px rgba(200, 210, 208, 0.7), 0 0 0 5px var(--stamp-red), 0 3px 10px rgba(0, 0, 0, 0.2); }
+        .seal-wax-circle { position: absolute; bottom: -32px; left: 50%; transform: translateX(-50%); width: 48px; height: 48px; border-radius: 50%; border: 3px solid var(--stamp-red-light); z-index: 6; display: flex; align-items: center; justify-content: center; background: rgba(139, 26, 26, 0.1); -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px); pointer-events: none; animation: stampPulse 3s ease-in-out infinite; }
+        @keyframes stampPulse { 0%,100% { box-shadow: 0 0 0 0 rgba(200, 40, 30, 0.25), 0 0 0 3px rgba(139, 26, 26, 0.15); } 50% { box-shadow: 0 0 0 8px rgba(200, 40, 30, 0.08), 0 0 0 3px rgba(139, 26, 26, 0.3); } }
+        .seal-wax-circle span { font-family: var(--typewriter); font-size: 8px; color: var(--stamp-red-light); text-align: center; line-height: 1.2; letter-spacing: 1px; font-weight: bold; text-transform: uppercase; transform: rotate(-7deg); }
+        .theme-toggle-wrap { position: relative; z-index: 7; flex-shrink: 0; }
+        .theme-toggle-btn { width: 40px; height: 40px; border-radius: 50%; border: 2px solid var(--border-medium); background: var(--glass-card); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); cursor: pointer; font-size: 18px; display: flex; align-items: center; justify-content: center; transition: all 0.35s ease; color: var(--text-primary); outline: none; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15); }
+        .theme-toggle-btn:hover { border-color: var(--accent-amber); box-shadow: 0 0 16px rgba(180, 140, 60, 0.25); transform: scale(1.06); }
+        .theme-toggle-btn .icon-sun, .theme-toggle-btn .icon-moon { transition: opacity 0.3s ease, transform 0.35s ease; position: absolute; }
+        body:not(.light-mode) .theme-toggle-btn .icon-moon { opacity: 0; transform: rotate(90deg) scale(0.5); }
+        body:not(.light-mode) .theme-toggle-btn .icon-sun { opacity: 1; transform: rotate(0deg) scale(1); }
+        body.light-mode .theme-toggle-btn .icon-sun { opacity: 0; transform: rotate(-90deg) scale(0.5); }
+        body.light-mode .theme-toggle-btn .icon-moon { opacity: 1; transform: rotate(0deg) scale(1); }
+        .dossier-header { position: relative; z-index: 2; padding: 30px 24px 18px; display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 14px; border-bottom: 1px solid var(--border-dark); background: linear-gradient(180deg, rgba(28, 30, 38, 0.5) 0%, transparent 100%); }
+        .left-col { display: flex; flex-direction: column; gap: 5px; }
+        .file-number { font-family: var(--typewriter); font-size: 12px; color: var(--accent-gold); letter-spacing: 2px; }
+        .file-number .dot { width: 5px; height: 5px; background: var(--accent-amber); border-radius: 50%; animation: blink 2s infinite; display: inline-block; }
+        .case-title { font-family: var(--sans); font-size: 22px; font-weight: 700; letter-spacing: 3px; color: var(--text-heading); text-transform: uppercase; }
+        .case-subtitle { font-family: var(--typewriter); font-size: 10px; color: var(--text-muted); letter-spacing: 1.5px; }
+        .header-right-buttons { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
+        .api-key-btn, .import-data-btn { padding: 8px 16px; border-radius: 20px; font-family: var(--sans); font-size: 11px; font-weight: 700; letter-spacing: 1px; cursor: pointer; transition: all 0.3s ease; border: 1px solid var(--border-medium); background: var(--glass-card); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); color: var(--text-primary); white-space: nowrap; }
+        .api-key-btn:hover, .import-data-btn:hover { border-color: var(--accent-amber); box-shadow: 0 0 12px rgba(180, 140, 60, 0.3); }
+        .api-key-btn.ready { border-color: #27ae60; color: #27ae60; background: rgba(39, 174, 96, 0.1); }
+        .import-data-btn { border-color: var(--accent-red-bright); color: var(--accent-red-bright); background: rgba(231, 76, 60, 0.08); }
+        .dossier-body { display: grid; grid-template-columns: 380px 1fr; gap: 0; min-height: 580px; align-items: start; }
+        .suspect-panel { border-right: 1px solid var(--border-dark); padding: 20px 16px; display: flex; flex-direction: column; gap: 14px; background: var(--bg-card); -webkit-backdrop-filter: blur(var(--blur-card)); backdrop-filter: blur(var(--blur-card)); height: 100%; overflow-y: auto; }
+        .analysis-panel { padding: 20px 20px; display: flex; flex-direction: column; gap: 14px; background: transparent; width: 100%; overflow: visible; }
+        @media (max-width: 900px) { .dossier-body { grid-template-columns: 1fr; } .suspect-panel { border-right: none; border-bottom: 1px solid var(--border-dark); } .matrix-lower { flex-direction: column !important; } .radar-col { min-width: auto !important; width: 100% !important; } .strategy-col { width: 100% !important; } .time-node-row { flex-wrap: wrap; gap: 8px; } .time-node-card { flex: 1 1 100%; min-width: auto; } }
+        .section-label { font-family: var(--typewriter); font-size: 9px; text-transform: uppercase; letter-spacing: 3px; color: var(--accent-gold); margin-bottom: 3px; display: flex; align-items: center; gap: 5px; }
+        .section-label::before { content: '◆'; font-size: 5px; color: var(--accent-amber); }
+        .mugshot-area { position: relative; width: 100%; aspect-ratio: 4/5; background: var(--mugshot-bg); border: 2px solid var(--border-medium); border-radius: 1px; overflow: hidden; }
+        .forensic-svg { width: 100%; height: 100%; display: block; }
+        .evidence-tag { position: absolute; top: 8px; left: 8px; background: rgba(26, 28, 34, 0.75); -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px); border: 1px solid var(--border-medium); padding: 3px 8px; font-family: var(--typewriter); font-size: 7px; color: var(--text-muted); letter-spacing: 1.5px; z-index: 2; pointer-events: none; }
+        .sketch-label-overlay { position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%); font-family: var(--typewriter); font-size: 8px; color: var(--sketch-accent-dim); letter-spacing: 2px; background: var(--sketch-label-bg); -webkit-backdrop-filter: blur(3px); backdrop-filter: blur(3px); padding: 3px 10px; border-radius: 1px; z-index: 2; pointer-events: none; white-space: nowrap; }
+        .case-arrows-row { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+        .case-arrow-btn { width: 30px; height: 30px; border-radius: 2px; border: 1.5px solid var(--border-medium); background: rgba(13, 15, 19, 0.75); -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px); cursor: pointer; color: var(--accent-amber); font-size: 15px; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; font-family: var(--typewriter); outline: none; user-select: none; }
+        .case-arrow-btn:hover { border-color: var(--accent-amber); background: rgba(26, 28, 34, 0.9); box-shadow: 0 0 12px rgba(180, 140, 60, 0.3); }
+        .case-indicator { font-family: var(--typewriter); font-size: 8px; color: var(--text-muted); letter-spacing: 1px; }
+        .inference-block { background: var(--glass-card); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); border: 1px solid var(--border-dark); border-radius: 2px; padding: 12px 14px; }
+        .inf-title { font-family: var(--typewriter); font-size: 9px; text-transform: uppercase; letter-spacing: 2px; color: var(--sketch-accent); margin-bottom: 8px; display: flex; align-items: center; gap: 5px; }
+        .inference-item { display: flex; align-items: flex-start; gap: 6px; margin-bottom: 5px; font-size: 10px; line-height: 1.5; color: var(--text-secondary); }
+        .inf-arrow { color: var(--sketch-accent); flex-shrink: 0; font-weight: bold; font-family: var(--typewriter); }
+        .info-table { width: 100%; border-collapse: collapse; font-family: var(--typewriter); font-size: var(--info-font-size); }
+        .info-table tr { border-bottom: 1px dotted var(--divider-color); }
+        .info-table td { padding: 7px 5px; vertical-align: top; }
+        .info-table .info-key { color: var(--text-muted); letter-spacing: 1px; font-size: calc(var(--info-font-size) - 2px); text-transform: uppercase; white-space: nowrap; width: 38%; }
+        .info-table .info-value { color: var(--text-primary); font-weight: 500; }
+        .highlight-value { color: var(--accent-amber); font-weight: 600; }
+        .code-name-blur { filter: blur(3px); opacity: 0.7; display: inline-block; }
+        .panel-section { background: var(--glass-card); -webkit-backdrop-filter: blur(var(--blur-card)); backdrop-filter: blur(var(--blur-card)); border: 1px solid var(--border-dark); border-radius: 2px; padding: 15px 17px; transition: all 0.35s ease; }
+        .panel-section:hover { background: var(--glass-card-hover); border-color: var(--border-medium); box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08); }
+        .section-header { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid var(--divider-color); }
+        .section-icon { width: 26px; height: 26px; border-radius: 3px; display: flex; align-items: center; justify-content: center; font-size: 13px; flex-shrink: 0; }
+        .icon-trajectory { background: rgba(59, 111, 182, 0.2); color: #5b9bd5; } .icon-motive { background: rgba(200, 60, 40, 0.2); color: #e74c3c; }
+        .icon-method { background: rgba(180, 140, 60, 0.2); color: #d4a843; } .icon-profile { background: rgba(120, 80, 160, 0.2); color: #a07cd5; }
+        .section-title { font-family: var(--sans); font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--text-heading); }
+        .matrix-section { background: var(--glass-card); -webkit-backdrop-filter: blur(var(--blur-card)); backdrop-filter: blur(var(--blur-card)); border: 1px solid var(--border-dark); border-radius: 2px; padding: 16px 18px; }
+        .matrix-header { display: flex; align-items: center; gap: 8px; margin-bottom: 14px; padding-bottom: 8px; border-bottom: 1px solid var(--divider-color); }
+        .matrix-icon { width: 28px; height: 28px; border-radius: 3px; background: rgba(231, 76, 60, 0.2); color: #e74c3c; display: flex; align-items: center; justify-content: center; font-size: 14px; }
+        .time-node-row { display: flex; gap: 0; margin-bottom: 16px; }
+        .time-node-card { flex: 1; background: var(--matrix-node-bg); -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px); border: 1px solid var(--border-dark); border-radius: 2px; padding: 14px 12px; cursor: pointer; transition: all 0.4s ease; text-align: center; }
+        .time-node-card.active { border-color: #e74c3c !important; box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.2), 0 0 30px rgba(231, 76, 60, 0.15); transform: translateY(-3px); }
+        .node-time-range { font-family: var(--typewriter); font-size: 10px; color: var(--accent-amber); }
+        .node-state-name { font-family: var(--sans); font-size: 13px; font-weight: 700; color: var(--text-heading); }
+        .node-platform { font-family: var(--typewriter); font-size: 8px; color: var(--text-muted); }
+        .matrix-lower { display: flex; gap: 16px; }
+        .radar-col { flex: 0 0 280px; background: var(--contrast-bar-bg); -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px); border: 1px solid var(--border-dark); padding: 14px; display: flex; flex-direction: column; align-items: center; }
+        .radar-svg-wrap { width: 200px; height: 200px; }
+        .radar-value-display { font-family: var(--typewriter); font-size: 28px; font-weight: 700; color: #e74c3c; margin-top: 6px; }
+        .radar-value-label { font-family: var(--typewriter); font-size: 8px; color: var(--text-muted); }
+        .strategy-col { flex: 1; display: flex; flex-direction: column; gap: 10px; }
+        .strategy-detail-card { background: var(--strategy-bg); -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px); border: 1px solid var(--border-dark); padding: 12px 14px; }
+        .sd-label { font-family: var(--typewriter); font-size: 8px; color: var(--text-muted); text-transform: uppercase; }
+        .sd-value { font-family: var(--sans); font-size: 12px; font-weight: 700; color: var(--text-heading); }
+        .sd-value.danger { color: #e74c3c; } .sd-value.success { color: #27ae60; } .sd-value.warn { color: var(--accent-amber); }
+        .contrast-bar { display: flex; align-items: center; gap: 10px; background: var(--contrast-bar-bg); -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px); border: 1px solid var(--border-dark); padding: 10px 14px; margin-top: 4px; }
+        .cb-val { font-family: var(--typewriter); font-size: 22px; font-weight: 700; }
+        .cb-val.low { color: #5b9bd5; } .cb-val.high { color: #e74c3c; animation: pulseVal 1.8s infinite; }
+        @keyframes pulseVal { 0%,100% { text-shadow: 0 0 8px rgba(231, 76, 60, 0.4); } 50% { text-shadow: 0 0 20px rgba(231, 76, 60, 0.8); } }
+        .timeline { position: relative; padding-left: 18px; border-left: 2px solid var(--timeline-line); margin-left: 6px; max-height: 280px; overflow-y: auto; padding-right: 6px; }
+        .timeline::-webkit-scrollbar { width: 4px; }
+        .timeline::-webkit-scrollbar-track { background: var(--border-dark); border-radius: 4px; }
+        .timeline::-webkit-scrollbar-thumb { background: var(--accent-amber); border-radius: 4px; }
+        .timeline-item { position: relative; margin-bottom: 11px; padding-left: 14px; }
+        .timeline-item::before { content: ''; position: absolute; left: -24px; top: 3px; width: 7px; height: 7px; border-radius: 50%; background: var(--ink-blue); border: 2px solid rgba(26, 28, 34, 0.8); }
+        .timeline-item.hot::before { background: var(--accent-red-bright); box-shadow: 0 0 8px rgba(231, 76, 60, 0.5); }
+        .tl-time { font-family: var(--typewriter); font-size: 9px; color: var(--text-muted); }
+        .tl-platform { display: inline-block; background: var(--platform-bg); color: var(--platform-text); border: 1px solid var(--border-dark); padding: 2px 6px; border-radius: 2px; font-size: 9px; font-family: var(--typewriter); margin: 0 3px; }
+        .tl-action { font-size: var(--timeline-font-size); color: var(--text-secondary); margin-top: 2px; line-height: 1.5; }
+        .tl-emotion-tag { display: inline-block; font-size: 8px; padding: 2px 5px; border-radius: 10px; margin-left: 3px; }
+        .emotion-suppressed { background: rgba(100, 100, 120, 0.2); color: #c1fbf6; border: 1px solid rgba(100, 100, 120, 0.3); }
+        .emotion-intense { background: rgba(200, 60, 40, 0.2); color: #e88; border: 1px solid rgba(200, 60, 40, 0.3); }
+        .tag-row { display: flex; flex-wrap: wrap; gap: 5px; }
+        .tag { font-family: var(--typewriter); font-size: 9px; padding: 4px 8px; border-radius: 1px; letter-spacing: 0.8px; border: 1px solid; }
+        .tag-evidence { border-color: rgba(180, 140, 60, 0.4); color: var(--accent-amber); background: var(--tag-bg-evidence); }
+        .tag-warning { border-color: rgba(200, 60, 40, 0.4); color: #e88; background: var(--tag-bg-warning); }
+        .tag-insight { border-color: rgba(59, 111, 182, 0.4); color: #155DF; background: var(--tag-bg-insight); }
+        .anchor-card { background: var(--anchor-card-bg); -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px); border: 1px solid rgba(180, 140, 60, 0.3); padding: 12px 14px; display: flex; gap: 8px; }
+        .anchor-icon { font-size: 24px; }
+        .anchor-title { font-weight: 700; font-size: 12px; color: var(--accent-amber); }
+        .anchor-desc { font-size: 10px; color: var(--text-secondary); }
+        .dossier-footer { position: relative; z-index: 2; border-top: 1px solid var(--border-dark); padding: 12px 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; background: var(--footer-bg); font-family: var(--typewriter); font-size: 8px; color: var(--text-muted); }
+        .footer-stamp { font-family: var(--sans); font-weight: 900; color: rgba(200, 60, 40, 0.45); letter-spacing: 2px; font-size: 10px; transform: rotate(-3deg); }
+        .redacted { background: var(--redacted-bg); color: transparent; padding: 1px 5px; border-radius: 1px; user-select: none; }
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.6); z-index: 100; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(4px); }
+        .modal { background: var(--bg-dossier); border: 1px solid var(--border-dark); border-radius: 8px; padding: 24px; max-width: 800px; width: 90%; max-height: 85vh; overflow-y: auto; color: var(--text-primary); }
+        .modal h3 { font-family: var(--sans); font-size: 16px; margin-bottom: 16px; color: var(--text-heading); }
+        .modal input, .modal select, .modal textarea { width: 100%; padding: 8px 12px; margin-bottom: 10px; background: rgba(255, 255, 255, 0.08); border: 1px solid var(--border-medium); border-radius: 4px; color: var(--text-primary); font-family: var(--sans); font-size: 13px; }
+        .modal .tag-group { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
+        .modal .tag-option { padding: 4px 12px; border-radius: 12px; border: 1px solid var(--border-medium); font-size: 11px; cursor: pointer; transition: 0.2s; user-select: none; }
+        .modal .tag-option.selected { background: var(--accent-amber); color: #000; border-color: var(--accent-amber); }
+        .modal .btn-row { display: flex; gap: 8px; justify-content: flex-end; margin-top: 12px; }
+        .modal .btn { padding: 8px 20px; border-radius: 20px; border: none; font-weight: 700; cursor: pointer; font-family: var(--sans); transition: 0.2s; }
+        .modal .btn-primary { background: var(--accent-amber); color: #000; }
+        .modal .btn-secondary { background: rgba(255, 255, 255, 0.1); color: var(--text-primary); border: 1px solid var(--border-medium); }
+        .behavior-row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; align-items: center; background: rgba(255,255,255,0.03); padding: 8px; border-radius: 6px; border: 1px solid var(--border-dark); }
+        .behavior-row input, .behavior-row select { flex: 1; min-width: 100px; margin-bottom: 0; }
+        .behavior-row .time-input { width: 90px; flex: 0 0 90px; }
+        .behavior-row .platform-select { width: 110px; flex: 0 0 110px; }
+        .behavior-row .desc-input { flex: 2; min-width: 150px; }
+        .behavior-row .emotion-select { width: 100px; flex: 0 0 100px; }
+        .behavior-row .amount-input { width: 100px; flex: 0 0 100px; }
+        .behavior-row .remove-behavior-btn { background: none; border: none; color: var(--accent-red-bright); cursor: pointer; font-size: 18px; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; border-radius: 4px; transition: 0.2s; }
+        .behavior-row .remove-behavior-btn:hover { background: rgba(200, 60, 40, 0.2); }
+        .add-behavior-btn { background: none; border: 1px dashed var(--border-medium); color: var(--text-muted); padding: 8px 12px; border-radius: 4px; cursor: pointer; font-family: var(--typewriter); font-size: 11px; width: 100%; margin-bottom: 10px; transition: 0.2s; }
+        .add-behavior-btn:hover { border-color: var(--accent-amber); color: var(--accent-amber); background: rgba(180,140,60,0.1); }
+        .platform-quick-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+        .platform-quick-tag { padding: 4px 12px; border-radius: 20px; border: 1px solid var(--border-medium); font-size: 11px; cursor: pointer; transition: 0.2s; background: var(--glass-card); }
+        .platform-quick-tag:hover { border-color: var(--accent-amber); background: rgba(180,140,60,0.2); }
+        .recommend-block { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 12px; }
+        .recommend-col { background: var(--glass-card); backdrop-filter: blur(4px); border: 1px solid var(--border-dark); border-radius: 4px; padding: 10px 12px; display: flex; flex-direction: column; gap: 6px; }
+        .recommend-title { font-family: var(--typewriter); font-size: 9px; letter-spacing: 1px; color: var(--accent-amber); text-transform: uppercase; margin-bottom: 2px; }
+        .recommend-tag { display: flex; align-items: center; gap: 6px; font-size: 10px; color: var(--text-secondary); padding: 4px 8px; border-radius: 6px; background: rgba(255, 255, 255, 0.04); border: 1px solid var(--border-dark); line-height: 1.4; }
+        .recommend-tag .icon { font-size: 14px; flex-shrink: 0; }
+        .recommend-tag .desc { font-size: 9px; color: var(--text-muted); margin-left: auto; }
+        @media (max-width: 750px) { .recommend-block { grid-template-columns: 1fr; gap: 10px; } .behavior-row { flex-direction: column; align-items: stretch; } .behavior-row input, .behavior-row select { width: 100%; flex: auto; } }
+    </style>
+</head>
+<body class="">
+    <div class="bg-orb orb-1"></div><div class="bg-orb orb-2"></div><div class="bg-orb orb-3"></div>
+    <div class="dossier">
+        <div class="dossier-top-seal"><div class="seal-left"><span>▮ 归档日期：2026-05-23</span><span>|</span><span style="color:#e74c3c;"><span class="status-dot"></span> 监控中</span></div><div class="theme-toggle-wrap"><button class="theme-toggle-btn" id="themeToggle"><span class="icon-sun">☀️</span><span class="icon-moon">🌙</span></button></div><div class="seal-wax-mark"></div><div class="seal-wax-circle"><span>已<br>归档</span></div></div>
+        <div class="dossier-header"><div class="left-col"><div class="file-number"><span class="dot"></span> 档案编号：<span id="caseFileNumber">UX-2026-0523-0147</span></div><div class="case-title">用户行为心理侧写档案<span class="project-info-icon"  id="projectInfoBtn">ℹ️</span></div><div class="case-subtitle">BEHAVIORAL PROFILING REPORT · 密级分类</div></div><div class="header-right-buttons"><button class="api-key-btn" id="apiKeyBtn">🔑 设置 API Key</button><button class="import-data-btn" id="importDataBtn">用户数据导入</button></div></div>
+        <div class="dossier-body">
+            <!-- 左侧面板 -->
+            <div class="suspect-panel">
+                <div><div class="case-arrows-row"><button class="case-arrow-btn" id="casePrev">◀</button><button class="case-arrow-btn" id="caseNext">▶</button><span class="case-indicator" id="caseIndicator">案例 1/6</span></div>
+                <div class="section-label">全息扫描 · 人物侧写还原</div>
+                <div class="mugshot-area"><div class="evidence-tag" id="evidenceTag">EVD-0147-SKETCH</div><div class="sketch-label-overlay">▲ 基于行为数据推断的全息轮廓</div>
+                <svg class="forensic-svg" viewBox="0 0 280 320" id="forensicSvg"><defs><pattern id="dotGrid" x="0" y="0" width="10" height="10" patternUnits="userSpaceOnUse"><circle cx="5" cy="5" r="1" fill="rgba(0,212,255,0.12)"/></pattern><style>@keyframes rotateScan{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}.scan-ring{transform-origin:128px 150px;animation:rotateScan 6s linear infinite;}</style></defs><rect width="280" height="320" fill="url(#dotGrid)" opacity="0.8"/><circle cx="128" cy="150" r="125" fill="none" stroke="#00d4ff" stroke-opacity="0.25" stroke-width="1.5" stroke-dasharray="8 18" class="scan-ring"/><line x1="44" y1="28" x2="44" y2="278" stroke="#e74c3c" stroke-width="1" stroke-dasharray="5 3" fill="none"/><line x1="40" y1="28" x2="52" y2="28" stroke="#e74c3c" stroke-width="0.8" fill="none"/><line x1="40" y1="278" x2="52" y2="278" stroke="#e74c3c" stroke-width="0.8" fill="none"/><text id="heightLabel" x="22" y="150" fill="#e74c3c" font-family="'Courier New',monospace" font-size="7px" transform="rotate(-90,22,150)" text-anchor="middle">身高约160cm</text><g id="figureGroup" transform="translate(128,278) scale(1) translate(-128,-278)"><path id="lowPolyBody" d="M128,20 L102,50 L128,80 Z M128,20 L128,80 L154,50 Z M128,20 L102,50 L154,50 Z M102,80 L154,80 L128,90 Z M112,95 L144,95 L128,140 Z M112,95 L128,140 L108,185 Z M144,95 L148,185 L128,140 Z M108,185 L148,185 L128,140 Z M112,95 L100,140 L98,155 Z M100,140 L98,155 L100,195 Z M98,155 L100,195 L106,198 Z M144,95 L156,130 L148,150 Z M156,130 L148,150 L140,135 Z M148,150 L140,135 L136,140 Z M108,185 L104,235 L118,235 Z M104,235 L100,270 L118,270 Z M100,270 L118,270 L106,278 Z M148,185 L152,235 L138,235 Z M152,235 L156,270 L138,270 Z M156,270 L138,270 L148,278 Z" fill="none" stroke="#00d4ff" stroke-opacity="0.6" stroke-width="1" stroke-linejoin="round"/></g><line x1="160" y1="38" x2="205" y2="18" stroke="#e74c3c" stroke-width="0.8" fill="none"/><circle cx="160" cy="38" r="2" fill="#e74c3c"/><text id="annotText1a" x="209" y="14" fill="#e74c3c" font-size="7px">活跃19:00-02:00</text><text id="annotText1b" x="209" y="23" fill="#e74c3c" font-size="7px">→ 推测夜型作息</text><line x1="148" y1="124" x2="200" y2="100" stroke="#e74c3c" stroke-width="0.8" fill="none"/><circle cx="148" cy="124" r="2" fill="#e74c3c"/><text id="annotText2a" x="203" y="96" fill="#e74c3c" font-size="7px">移动端为主</text><text id="annotText2b" x="203" y="105" fill="#e74c3c" font-size="7px">→ 低头族姿态</text><line x1="140" y1="75" x2="200" y2="68" stroke="rgba(231,76,60,0.5)" stroke-width="0.6" stroke-dasharray="1.5 3" fill="none"/><text id="annotText3" x="203" y="65" fill="#6b6e78" font-size="6.5px">穿着:休闲通勤</text><line x1="146" y1="145" x2="205" y2="138" stroke="#e74c3c" stroke-width="0.8" fill="none"/><circle cx="146" cy="145" r="2" fill="#e74c3c"/><text id="annotText4a" x="208" y="134" fill="#e74c3c" font-size="7px">行政助理→久坐</text><text id="annotText4b" x="208" y="143" fill="#e74c3c" font-size="7px">体型:中等/微前倾</text><rect x="155" y="286" width="115" height="24" rx="2" fill="var(--sketch-label-bg)" stroke="#6b6e78" stroke-width="0.5"/><text id="weightLabel" x="160" y="301" fill="#e74c3c" font-size="7px">体重：██ kg（推断，置信度62%）</text><line x1="55" y1="278" x2="180" y2="278" stroke="rgba(231,76,60,0.5)" stroke-width="0.6" stroke-dasharray="1.5 3" fill="none"/><text x="185" y="280" fill="#6b6e78" font-size="6.5px">地平面参考</text></svg></div></div>
+                <div class="inference-block"><div class="inf-title">🔍 推断依据</div><div id="inferenceContent"></div></div>
+                <div><div class="section-label">基本信息</div><table class="info-table" id="infoTable"></table></div>
+                <div><div class="section-label">关键指标</div><div class="tag-row" id="keyMetrics"></div></div>
+            </div>
+            <!-- 右侧面板 -->
+            <div class="analysis-panel">
+                <div class="matrix-section"><div class="matrix-header"><div class="matrix-icon">⏳</div><span class="section-title">动态状态矩阵 · 时间轨迹</span></div><div class="time-node-row" id="timeNodeRow"></div><div class="matrix-lower"><div class="radar-col"><div class="radar-title">心理侧写雷达图</div><div class="radar-svg-wrap"><svg viewBox="0 0 200 200" id="radarSvg"><polygon points="100,18 178,66 148,145 52,145 22,66" fill="none" stroke="var(--radar-grid)" stroke-width="0.8"/><polygon points="100,38 164,76 140,130 60,130 36,76" fill="none" stroke="var(--radar-grid)" stroke-width="0.6" stroke-dasharray="3 2"/><polygon points="100,56 150,80 130,115 70,115 50,80" fill="none" stroke="var(--radar-grid)" stroke-width="0.4"/><line x1="100" y1="100" x2="100" y2="14" stroke="var(--radar-grid)" stroke-width="0.5"/><line x1="100" y1="100" x2="180" y2="64" stroke="var(--radar-grid)" stroke-width="0.5"/><line x1="100" y1="100" x2="150" y2="148" stroke="var(--radar-grid)" stroke-width="0.5"/><line x1="100" y1="100" x2="50" y2="148" stroke="var(--radar-grid)" stroke-width="0.5"/><line x1="100" y1="100" x2="20" y2="64" stroke="var(--radar-grid)" stroke-width="0.5"/><polygon id="radarPolygon" points="100,70 140,88 125,120 75,120 60,88" fill="var(--radar-fill-1)" stroke="#5b9bd5" stroke-width="1.8"/><circle id="rd0" cx="100" cy="70" r="3.5" fill="#5b9bd5"/><circle id="rd1" cx="140" cy="88" r="3.5" fill="#5b9bd5"/><circle id="rd2" cx="125" cy="120" r="3.5" fill="#5b9bd5"/><circle id="rd3" cx="75" cy="120" r="3.5" fill="#5b9bd5"/><circle id="rd4" cx="60" cy="88" r="3.5" fill="#5b9bd5"/><text x="100" y="8" text-anchor="middle" fill="var(--text-secondary)" font-size="8" font-family="'Courier New',monospace">情感投入</text><text x="186" y="62" text-anchor="start" fill="var(--text-secondary)" font-size="8" font-family="'Courier New',monospace">消费意愿</text><text x="154" y="156" text-anchor="middle" fill="var(--text-secondary)" font-size="8" font-family="'Courier New',monospace">社交活跃</text><text x="46" y="156" text-anchor="middle" fill="var(--text-secondary)" font-size="8" font-family="'Courier New',monospace">理性程度</text><text x="10" y="62" text-anchor="end" fill="var(--text-secondary)" font-size="8" font-family="'Courier New',monospace">冲动指数</text></svg></div><div class="radar-value-display blue" id="radarDominantValue">85</div><div class="radar-value-label" id="radarDominantLabel">理性程度 · 主导维度</div></div><div class="strategy-col"><div class="strategy-detail-card"><div class="sd-label">当前状态</div><div class="sd-value" id="strategyStateName">🛡️ 潜伏模式 / 生存维持</div></div><div class="strategy-detail-card"><div class="sd-label">行为特征</div><div class="sd-value" id="strategyBehavior">高频处理文字、极低情感波动</div></div><div class="strategy-detail-card"><div class="sd-label">推送策略</div><div class="sd-value danger" id="strategyAction">❌ 冷处理，不宜推送</div></div><div class="contrast-bar"><div class="cb-item"><div class="cb-val low" id="contrastAbility">¥35</div><div class="cb-label">日常消费能力</div></div><div class="cb-vs">VS</div><div class="cb-item"><div class="cb-val high" id="contrastWilling">¥15</div><div class="cb-label">当前消费意愿</div></div></div><div class="recommend-block"><div class="recommend-col"><div class="recommend-title">📦 推荐商品类型</div><div class="recommend-tags" id="recommendGoods"></div></div><div class="recommend-col"><div class="recommend-title">📱 推荐内容类型</div><div class="recommend-tags" id="recommendContent"></div></div></div></div></div></div>
+                <div class="panel-section"><div class="section-header"><div class="section-icon icon-trajectory">📍</div><span class="section-title">行为轨迹 · 用户旅程还原</span></div><div class="timeline" id="timelineContainer"></div></div>
+                <div class="panel-section"><div class="section-header"><div class="section-icon icon-motive">🎯</div><span class="section-title">行为动机分析 · 用户目标与痛点</span></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;font-size:11px;"><div style="background:var(--strategy-bg);padding:10px 12px;border-radius:2px;"><strong style="color:var(--accent-amber);">核心目标</strong><p style="color:var(--text-secondary);margin-top:4px;line-height:1.5;" id="motivationGoal"></p></div><div style="background:var(--strategy-bg);padding:10px 12px;border-radius:2px;"><strong style="color:#e74c3c;">核心痛点</strong><p style="color:var(--text-secondary);margin-top:4px;line-height:1.5;" id="motivationPain"></p></div></div></div>
+                <div class="panel-section"><div class="section-header"><div class="section-icon icon-method">🔧</div><span class="section-title">惯用手法 · 使用习惯模式</span></div><div class="tag-row" id="habitsTags"></div></div>
+                <div class="panel-section"><div class="section-header"><div class="section-icon icon-profile">🧠</div><span class="section-title">心理侧写 · 情感锚点定位</span></div><div class="anchor-card"><div class="anchor-icon">⚓</div><div class="anchor-content"><div class="anchor-title" id="anchorTitle">情感锚点：偶像归属感</div><div class="anchor-desc" id="anchorDesc">消费决策不再基于价格理性，而是基于情感投入强度。<br><strong style="color:var(--accent-amber);">消费意愿 = 情感投入程度 × 锚点触发强度</strong></div></div></div></div>
+            </div>
+        </div>
+        <div class="dossier-footer"><div><span class="status-dot"></span> 档案状态：ACTIVE · 持续更新中</div><div style="display:flex;align-items:center;gap:12px;"><span>分析师：UX-RESEARCH-07</span><span>|</span><span>审核：<span class="redacted">█████</span></span><span class="footer-stamp">● 机密档案 ●</span></div></div>
+    </div>
+    <div class="modal-overlay" id="apiKeyModal" style="display:none;"><div class="modal"><h3>🔑 设置 API Key</h3><p style="font-size: 12px; color:#e74c3c; margin: 0 0 12px 0;">⚠️ 当前仅支持 DeepSeek API，Key 格式为 sk-...</p><input type="password" id="apiKeyInput" placeholder="输入您的 DeepSeek API Key（以 sk- 开头）"><div class="btn-row">  <button class="btn btn-secondary" id="apiKeyDelete" style="background: rgba(200,60,40,0.2); border-color: var(--accent-red-bright); color: var(--accent-red-bright);">🗑️ 删除 Key</button>
+        <button class="btn btn-secondary" id="apiKeyCancel">取消</button>
+        <button class="btn btn-primary" id="apiKeyConfirm">确认</button>
+    </div>
+</div>
+</div> 
+   <!-- 用户数据导入模态框 -->
+    <div class="modal-overlay" id="importModal" style="display:none;">
+        <div class="modal" style="max-width: 900px;">
+            <h3>📥 用户数据导入</h3>
+            <input type="text" id="importCodeName" placeholder="代号（昵称）">
+            <input type="text" id="importAge" placeholder="年龄">
+            <input type="text" id="importOccupation" placeholder="职业">
+            <input type="text" id="importGender" placeholder="性别">
+            <input type="text" id="importActiveTime" placeholder="活跃时段 (例如: 19:00-02:00)">
+            <div class="tag-group" id="platformTags"></div>
+            <hr style="border-color:var(--border-dark);margin:10px 0;">
+            <h4 style="font-size:13px;margin-bottom:8px;">行为记录</h4>
+            <div class="platform-quick-tags" id="platformQuickTags">
+                <span class="platform-quick-tag" data-platform="微信">微信</span>
+                <span class="platform-quick-tag" data-platform="微博">微博</span>
+                <span class="platform-quick-tag" data-platform="抖音">抖音</span>
+                <span class="platform-quick-tag" data-platform="小红书">小红书</span>
+                <span class="platform-quick-tag" data-platform="淘宝">淘宝</span>
+                <span class="platform-quick-tag" data-platform="拼多多">拼多多</span>
+                <span class="platform-quick-tag" data-platform="B站">B站</span>
+                <span class="platform-quick-tag" data-platform="Steam">Steam</span>
+                <span class="platform-quick-tag" data-platform="GitHub">GitHub</span>
+                <span class="platform-quick-tag" data-platform="美团">美团</span>
+                <span class="platform-quick-tag" data-platform="京东">京东</span>
+            </div>
+            <div id="behaviorRowsContainer"></div>
+            <button class="add-behavior-btn" id="addBehaviorBtn">+ 添加行为记录</button>
+            <div class="btn-row">
+                <button class="btn btn-secondary" id="importCancel">取消</button>
+                <button class="btn btn-primary" id="generateBtn">生成档案</button>
+            </div>
+        </div>
+    </div>
+<!-- 项目介绍模态框 -->
+<div class="modal-overlay" id="projectInfoModal" style="display:none;">
+    <div class="modal" style="max-width: 700px;">
+        <h3>📖 项目：User Profiler | 用户行为状态侧写系统</h3>
+        <p style="color: var(--accent-amber); font-style: italic; margin: 8px 0 16px 0;">
+            “不再停留于“用户是谁”，而是理解“用户此刻在关注什么。”
+        </p>
+        <div style="max-height: 60vh; overflow-y: auto; padding-right: 8px;">
+            <p><strong>🎯 核心理念：人是情感与状态的集合</strong><br>
+           传统用户画像依赖年龄、性别、消费能力等静态标签，但真实的人并不是固定不变的。<br>
+            一个日常消费都要货比三家的人，可能会为了热爱的兴趣毫不犹豫地掷下千金。<br>
+            同一个人，在微信上平和克制，在微博、抖音等平台里放肆宣泄。<br>
+            因为<strong>消费意愿永远与情感投入深度绑定</strong>，而非收入。</p>
+            
+            User Profiler 希望解决的，不是“给用户贴标签”，而是更准确地理解用户当前的心理状态与真实需求。<br>
+            <strong>通过用户在不同时间、不同平台的行为碎片，识别其即时心理状态，找到驱动真实行为的情感锚点，从而给出更精准的触达策略。</strong></p>
+
+            <hr style="margin: 16px 0; border-color: var(--border-dark);">
+
+            <p><strong>⚡ 核心优势（与传统画像的本质区别）</strong></p>
+            <table style="width: 100%; border-collapse: collapse; font-size: 12px; background: var(--bg-card);">
+                <tr style="border-bottom: 1px solid var(--border-dark);">
+                    <th style="padding: 8px; text-align: left;">维度</th>
+                    <th style="padding: 8px; text-align: left;">传统用户画像</th>
+                    <th style="padding: 8px; text-align: left;">侧写系统 (User Profiler)</th>
+                </tr>
+                <tr>
+                    <td style="padding: 8px;">视角</td>
+                    <td style="padding: 8px;">静态标签（假设人是固定不变的）</td>
+                    <td style="padding: 8px;">动态状态（承认人的复杂与跳跃）</td>
+                </tr>
+                <tr>
+                    <td style="padding: 8px;">核心逻辑</td>
+                    <td style="padding: 8px;">25岁女性 → 机械地推送美妆</td>
+                    <td style="padding: 8px;">识别“主动成长模式” → 精准推送学习与效率工具</td>
+                </tr>
+                <tr>
+                    <td style="padding: 8px;">数据维度</td>
+                    <td style="padding: 8px;">人口统计学</td>
+                    <td style="padding: 8px;">时间× 平台× 动作× 情感动向</td>
+                </tr>
+            </table>
+
+            <p style="margin-top: 16px;"><strong>🛠️ 产品如何工作？</strong><br>
+            你只需要输入用户在不同时间、不同平台的行为碎片，系统将通过特有的情感锚点算法，像心理侧写师一样，为你拼凑出最真实的动态档案：<br>
+            [捕捉行为] ──> [识别即时状态] ──> [跨平台交叉对比] ──> [定位情感锚点] ──> [输出推送策略]</p>
+
+            <p><strong>📋 侧写档案核心内容：</strong><br>
+            🙂 今日状态分布图：实时呈现用户在不同时段的心理状态，包括焦虑、专注、寻求补偿、情感宣泄等维度分布。<br>
+            🎯 情感锚点判定： 剥离表面行为，直击用户当前最核心的动机（如：自我提升、孤独慰藉、压力释放）。<br>
+            🚀 动态推送策略建议： 不再盲目群发，给出行之有效的即时触达方案。</p>
+
+            <p><strong>🎇 产品定位</strong><br>
+            User Profiler 不是又一个数据看板。<br>
+            它更像一份随时可以翻阅的用户备忘录——记录的不是"这个人是谁"，而是"这个人现在在意什么"。<br>
+            让每一个数据，都变成有温度、有呼吸的故事。</p>
+        </div>
+        <div class="btn-row" style="margin-top: 16px;">
+            <button class="btn btn-secondary" id="closeProjectInfoBtn">关闭</button>
+        </div>
+    </div>
+</div>
+    <script>
+        (function() {
+            // ======================= 完整6个案例数据（追光者、夜航员、游牧者、编码隐士、回声收集者、权力猎手） =======================
+            const cases = [
+                // CASE-01 追光者
+                { id:'UX-2026-0523-0147', evd:'EVD-0147-SKETCH', codeName:'追光者', age:'24 岁', occupation:'行政助理', activeTime:'19:00 – 02:00', platforms:'微信 · 微博超话 · 小红书 · 拼多多 · 大麦', dataSource:'跨平台行为追踪 (7日)', risk:'⚠ 高消费潜力 · 待激活', height:'身高约160cm', build:'体型:中等/微前倾', occupationNote:'行政助理→久坐', clothing:'穿着:休闲通勤', weight:'体重：██ kg（推断，置信度62%）', sleepNote:'活跃19:00-02:00', sleepInfer:'→ 推测夜型作息', mobileNote:'移动端为主', mobileInfer:'→ 低头族姿态', metrics:['日常消费：¥35/单','峰值消费：¥1,800/单','消费意愿倍差：50x','情感投入指数：极高','跨平台行为差异：显著'], inferences:['活跃时段19:00-02:00 → 推测作息偏夜型','职业：行政助理 → 推测久坐办公，肩颈微前倾','移动端为主 → 习惯低头看手机姿态','穿着风格：休闲通勤 → 日间职业装+夜间舒适休闲'],
+                  states:[{ timeRange:'09:00–18:00', stateName:'🛡️ 潜伏模式', platform:'企业微信 · 钉钉', radar:[30,15,85,25,10], dominantValue:85, dominantLabel:'理性程度 · 主导维度', dominantClass:'blue', behavior:'高频处理文字、极低情感波动', action:'❌ 冷处理，不宜推送。', actionClass:'danger', ability:'¥35', willing:'¥15', polygonFill:'var(--radar-fill-1)', polygonStroke:'#5b9bd5', dotFill:'#5b9bd5', recGoods:[{icon:'☕',text:'咖啡/茶饮',desc:'轻度提神'},{icon:'📎',text:'效率工具',desc:'待办清单/笔记'},{icon:'🍱',text:'健康简餐',desc:'低脂外卖'}], recContent:[{icon:'📊',text:'行业快讯',desc:'短篇资讯'},{icon:'🎧',text:'播客/白噪音',desc:'专注背景'},{icon:'💼',text:'效率课程',desc:'碎片化学习'}] },
+                  { timeRange:'19:00–21:00', stateName:'🔓 防御卸载', platform:'美团 · 淘宝', radar:[40,30,70,45,22], dominantValue:70, dominantLabel:'理性程度 · 主导维度', dominantClass:'amber', behavior:'疯狂比对日常菜价、锱铢必较', action:'⚠ 谨慎推送。', actionClass:'warn', ability:'¥35', willing:'¥28', polygonFill:'var(--radar-fill-2)', polygonStroke:'#d4a843', dotFill:'#d4a843', recGoods:[{icon:'🛒',text:'日用品囤货',desc:'比价最优'},{icon:'🍿',text:'零食礼包',desc:'追剧伴侣'},{icon:'💄',text:'平价彩妆',desc:'小红书爆款'}], recContent:[{icon:'😂',text:'搞笑短视频',desc:'放松解压'},{icon:'🧑‍🍳',text:'生活测评',desc:'外卖/网购指南'},{icon:'🎬',text:'微短剧',desc:'快节奏娱乐'}] },
+                  { timeRange:'22:00–01:00', stateName:'🔥 狂热觉醒', platform:'微博超话 · B站', radar:[95,92,15,90,88], dominantValue:95, dominantLabel:'情感投入度 · 主导维度', dominantClass:'', behavior:'为Idol控评打榜、无视价格下单周边', action:'✅ 最佳推送窗口！', actionClass:'success', ability:'¥35', willing:'¥1,800', polygonFill:'var(--radar-fill-3)', polygonStroke:'#e74c3c', dotFill:'#e74c3c', recGoods:[{icon:'💿',text:'偶像周边',desc:'限量应援物'},{icon:'🎫',text:'粉丝见面会门票',desc:'情感溢价'},{icon:'📸',text:'明星同款',desc:'社交资本'}], recContent:[{icon:'❤️',text:'粉丝应援',desc:'打榜/控评教程'},{icon:'🎥',text:'舞台直拍',desc:'沉浸追星'},{icon:'🌌',text:'情感共鸣',desc:'深夜追星树洞'}] }],
+                  timeline:[
+                    { time:'08:30', platform:'微信', emotionClass:'emotion-suppressed', emotionText:'职场伪装', action:'回复工作群消息：“收到，这就安排。” 挤地铁时身体前倾，高频刷新打卡小程序。', isHot:false },
+                    { time:'14:15', platform:'拼多多', emotionClass:'emotion-suppressed', emotionText:'日常精算', action:'午后久坐肩颈酸痛，低头在拼多多参与垃圾袋和抽纸的“砍一刀”与拼单，表现出极强的日常价格敏感。', isHot:false },
+                    { time:'19:24', platform:'美团', emotionClass:'emotion-suppressed', emotionText:'状态切换', action:'下班换上舒适卫衣，在回租房的路上高频刷美团外卖，精细比对满减券，下单了一份 ¥22 的单人螺蛳粉。', isHot:false },
+                    { time:'22:45', platform:'微博超话', emotionClass:'emotion-intense', emotionText:'真实投影', action:'处于彻底放松的夜型作息，开始高频为 Idol 控评、打榜。发文：“今天又是为哥哥流泪的一天！[爱心]”', isHot:true },
+                    { time:'01:30', platform:'大麦网', emotionClass:'emotion-intense', emotionText:'情绪高潮', action:'深夜无视日常消费能力限制，顶着肩颈酸痛连夜抢购 ¥1,280 的演唱会门票，消费意愿在此刻达到峰值。', isHot:true }
+                  ],
+                  motivationGoal:'寻求情感归属与身份认同——在偶像社群中获得「核心粉丝」身份认可。', motivationPain:'日常社交中情感表达受限，真实自我被压抑，需要安全的情感释放出口。', habits:['深夜高频活跃','多平台账号统一','比价工具熟练使用','情感驱动快速决策','社群互动优先','移动端为主'], anchorTitle:'情感锚点：偶像归属感', anchorDesc:'消费决策不再基于价格理性，而是基于情感投入强度。<br><strong style="color:var(--accent-amber);">消费意愿 = 情感投入程度 × 锚点触发强度</strong>' },
+                // CASE-02 夜航员
+                { id:'UX-2026-0523-0231', evd:'EVD-0231-SKETCH', codeName:'夜航员', age:'32 岁', occupation:'后端程序员', activeTime:'21:00 – 04:00', platforms:'GitHub · 微信 · Steam · 京东', dataSource:'跨平台行为追踪 (7日)', risk:'⚠ 中等消费潜力 · 深夜冲动型', height:'身高约175cm', build:'体型:偏瘦/圆肩驼背', occupationNote:'程序员→久坐coding', clothing:'穿着:卫衣+牛仔裤', weight:'体重：██ kg（推断，置信度58%）', sleepNote:'活跃21:00-04:00', sleepInfer:'→ 深度夜型作息', mobileNote:'PC端为主', mobileInfer:'→ 长期伏案姿态', metrics:['日常消费：¥52/单','峰值消费：¥2,200/单','消费意愿倍差：42x','情感投入指数：中等','跨平台行为差异：中等'], inferences:['活跃时段21:00-04:00 → 典型夜猫子程序员','职业：后端程序员 → 长期伏案，圆肩驼背体态','PC端为主 → 颈椎前倾，腰椎压力大','穿着风格：卫衣+牛仔裤 → 舒适优先，不重外表'],
+                  states:[{ timeRange:'09:00–18:00', stateName:'🛡️ 潜伏模式', platform:'GitHub · IDE', radar:[20,10,90,15,8], dominantValue:90, dominantLabel:'理性程度 · 主导维度', dominantClass:'blue', behavior:'高专注编码、极低社交互动', action:'❌ 冷处理，不宜推送。', actionClass:'danger', ability:'¥52', willing:'¥10', polygonFill:'var(--radar-fill-1)', polygonStroke:'#5b9bd5', dotFill:'#5b9bd5', recGoods:[{icon:'💺',text:'人体工学颈椎支架',desc:'缓解圆肩驼背'},{icon:'☕',text:'高纯度无糖黑咖啡',desc:'高频编码提神'},{icon:'🪑',text:'多功能高回弹腰靠',desc:'缓解腰椎压力'}], recContent:[{icon:'⚙️',text:'GitHub高效工作流插件',desc:'开发效率翻倍'},{icon:'🚀',text:'后端架构性能调优快讯',desc:'2026技术前沿'},{icon:'🎧',text:'Lo-fi沉浸式编码音频',desc:'心流背景音'}] },
+                  { timeRange:'19:00–22:00', stateName:'🔓 防御卸载', platform:'Steam · 京东', radar:[35,28,65,40,20], dominantValue:65, dominantLabel:'理性程度 · 主导维度', dominantClass:'amber', behavior:'游戏放松、浏览电子设备参数', action:'⚠ 谨慎推送科技产品。', actionClass:'warn', ability:'¥52', willing:'¥35', polygonFill:'var(--radar-fill-2)', polygonStroke:'#d4a843', dotFill:'#d4a843', recGoods:[{icon:'🍿',text:'零食大礼包',desc:'高性价比囤货'},{icon:'🍔',text:'深夜重口味外卖券',desc:'即时热量满足'},{icon:'👕',text:'纯棉无感卫衣',desc:'舒适日常穿着'}], recContent:[{icon:'🎮',text:'Steam好评独立游戏',desc:'杀时间神器'},{icon:'🤣',text:'程序员自嘲搞笑视频',desc:'解压放松'},{icon:'💻',text:'数码白牌平替开箱',desc:'百元内好物'}] },
+                  { timeRange:'23:00–04:00', stateName:'🔥 沉浸逃避', platform:'Steam · B站', radar:[85,75,20,30,70], dominantValue:85, dominantLabel:'情感投入度 · 主导维度', dominantClass:'', behavior:'长时间游戏沉浸、逃避现实', action:'✅ 最佳窗口！推游戏硬件。', actionClass:'success', ability:'¥52', willing:'¥2,200', polygonFill:'var(--radar-fill-3)', polygonStroke:'#e74c3c', dotFill:'#e74c3c', recGoods:[{icon:'⌨️',text:'客制化机械键盘/4090显卡',desc:'绝对掌控硬件'},{icon:'📟',text:'极客参数测量仪',desc:'参数研究癖'},{icon:'🎮',text:'Steam高自由度3A大作',desc:'构建可控世界'}], recContent:[{icon:'⚡',text:'硬件超频压榨指南',desc:'性能极限美学'},{icon:'🤖',text:'赛博朋克幕后解密',desc:'硬核影视解析'},{icon:'🌃',text:'深夜电台：代码与远方',desc:'孤寂夜航员共鸣'}] }],
+                  timeline:[
+                    { time:'10:15', platform:'企业微信', emotionClass:'emotion-suppressed', emotionText:'机械运转', action:'双手高频敲击代码，全天极低情绪波动。回复产品经理：“改不了，排期不够。” 此时腰椎承受巨大压力。', isHot:false },
+                    { time:'17:30', platform:'GitHub', emotionClass:'emotion-suppressed', emotionText:'极客生存', action:'处于低社交模式，在 GitHub 上盲审（Review）开源代码，频繁揉捏酸痛的前倾颈椎。', isHot:false },
+                    { time:'21:40', platform:'美团外卖', emotionClass:'emotion-suppressed', emotionText:'夜间食欲', action:'到家脱掉外套，开启典型夜猫子生活。在美团下单“深夜烧烤重辣套餐+冰可乐”，备注：“放无接触配送，别打电话”。', isHot:false },
+                    { time:'23:15', platform:'Steam', emotionClass:'emotion-intense', emotionText:'虚拟掌控', action:'登录 Steam 启动高难度硬核策略游戏，全神贯注沉浸其中，在绝对可控的代码与游戏规则里逃避现实的失控感。', isHot:true },
+                    { time:'02:50', platform:'京东', emotionClass:'emotion-intense', emotionText:'参数冲动', action:'游戏连败后产生强烈挫败感，转战京东疯狂研究固态硬盘和客制化键盘的芯片参数，深夜冲动下单了一款 ¥2,200 的极客外设。', isHot:true }
+                  ],
+                  motivationGoal:'通过虚拟世界逃避现实失控感，在代码和游戏中寻找可控世界。', motivationPain:'口头反消费，实际依赖高科技消费获得掌控感。日常低表达，社交退缩。', habits:['PC端高专注编码','深夜游戏沉浸','电子设备参数研究','低社交模式','夜间食欲型饮食','移动端碎片化使用'], anchorTitle:'情感锚点：可控世界', anchorDesc:'购买电子设备本质是购买安全感。在虚拟世界中寻找现实缺失的掌控感。<br><strong style="color:var(--accent-amber);">真实消费动机 = 安全感 × 沉浸深度</strong>' },
+                // CASE-03 游牧者
+                { id:'UX-2026-0523-0389', evd:'EVD-0389-SKETCH', codeName:'游牧者', age:'20 岁', occupation:'大学生', activeTime:'15:00 – 01:00', platforms:'抖音 · B站 · 小红书 · 得物 · 美团', dataSource:'跨平台行为追踪 (7日)', risk:'⚠ 高消费潜力 · 潮流驱动型', height:'身高约178cm', build:'体型:匀称/体态良好', occupationNote:'大学生→校园活动多', clothing:'穿着:潮牌休闲', weight:'体重：██ kg（推断，置信度71%）', sleepNote:'活跃15:00-01:00', sleepInfer:'→ 弹性作息', mobileNote:'移动端为主', mobileInfer:'→ 多场景使用', metrics:['日常消费：¥68/单','峰值消费：¥1,500/单','消费意愿倍差：22x','情感投入指数：中等偏高','跨平台行为差异：中等'], inferences:['活跃时段15:00-01:00 → 弹性作息，校园节奏','职业：大学生 → 体态较好，活动量大','移动端为主 → 碎片化使用习惯','穿着风格：潮牌休闲 → 注重潮流与社交形象'],
+                  states:[{ timeRange:'09:00–12:00', stateName:'🛡️ 潜伏模式', platform:'教务系统 · 微信', radar:[25,18,75,35,15], dominantValue:75, dominantLabel:'理性程度 · 主导维度', dominantClass:'blue', behavior:'上课签到、被动接收信息', action:'❌ 冷处理。', actionClass:'danger', ability:'¥68', willing:'¥12', polygonFill:'var(--radar-fill-1)', polygonStroke:'#5b9bd5', dotFill:'#5b9bd5', recGoods:[{icon:'🥤',text:'设计感保温杯',desc:'校园便携'},{icon:'🎒',text:'轻量双肩包',desc:'高活动量通勤'},{icon:'📓',text:'效率手帐本/类纸膜',desc:'自律人设建立'}], recContent:[{icon:'📚',text:'大学生碎片化时间管理',desc:'搞定绩点'},{icon:'🎙️',text:'深度连接播客',desc:'社交破局'},{icon:'👔',text:'校园OOTD轻便风',desc:'穿搭灵感合集'}] },
+                  { timeRange:'15:00–18:00', stateName:'🔓 社交浏览', platform:'抖音 · 小红书', radar:[55,45,50,60,40], dominantValue:60, dominantLabel:'社交活跃度 · 主导维度', dominantClass:'amber', behavior:'刷潮流视频、浏览穿搭内容', action:'⚠ 可推潮流内容。', actionClass:'warn', ability:'¥68', willing:'¥45', polygonFill:'var(--radar-fill-2)', polygonStroke:'#d4a843', dotFill:'#d4a843', recGoods:[{icon:'👟',text:'得物潮鞋优惠券',desc:'券敏感快速决策'},{icon:'🍵',text:'网红茶饮拼单券',desc:'碎片社交配套'},{icon:'💄',text:'平价彩妆/男士理容',desc:'注重社交形象'}], recContent:[{icon:'🔥',text:'网络热梗&穿搭翻车',desc:'抖音小红书爆款'},{icon:'👕',text:'百元高街平替指南',desc:'学生党避坑'},{icon:'📺',text:'大学生精神状态微短剧',desc:'轻松共鸣'}] },
+                  { timeRange:'20:00–01:00', stateName:'🔥 潮流驱动', platform:'B站 · 得物', radar:[80,78,25,75,65], dominantValue:80, dominantLabel:'情感投入度 · 主导维度', dominantClass:'', behavior:'浏览限量潮品、下单决策快', action:'✅ 最佳窗口！推限量潮品。', actionClass:'success', ability:'¥68', willing:'¥1,500', polygonFill:'var(--radar-fill-3)', polygonStroke:'#e74c3c', dotFill:'#e74c3c', recGoods:[{icon:'👟',text:'限量联名潮鞋/公仔',desc:'社交货币'},{icon:'🎤',text:'Livehouse门票',desc:'圈子归属'},{icon:'🧥',text:'设计师极潮单品',desc:'峰值消费潜力'}], recContent:[{icon:'🎵',text:'最潮音乐节打榜指南',desc:'圈子扩列'},{icon:'✨',text:'校园回头率200%单品',desc:'深度测评'},{icon:'🌃',text:'致特立独行的年轻人',desc:'深夜情感共鸣'}] }],
+                  timeline:[
+                    { time:'10:30', platform:'微信', emotionClass:'emotion-suppressed', emotionText:'边缘潜水', action:'在大学阶梯教室后排低头刷手机，对班级群里的通知毫无波动，偶尔回复一个敷衍的表情包。', isHot:false },
+                    { time:'15:12', platform:'小红书', emotionClass:'emotion-suppressed', emotionText:'潮流捕捉', action:'下午活动量增大，在校园咖啡厅高频、碎片化滑动小红书，输入搜索词：“美式复古高街穿搭 OOTD”。', isHot:false },
+                    { time:'18:45', platform:'抖音', emotionClass:'emotion-suppressed', emotionText:'社交焦虑', action:'在食堂排队时多平台快速切换。刷到同校红人的穿搭视频，产生强烈的同辈社交焦虑，反复查看评论区。', isHot:false },
+                    { time:'21:30', platform:'得物', emotionClass:'emotion-intense', emotionText:'身份建立', action:'回到宿舍，在得物 App 上快速决策，下单了一双溢价严重的限量版联名潮鞋（消费 ¥1,500），用以购买在校园圈子里的“潮人社交货币”。', isHot:true },
+                    { time:'00:20', platform:'B站', emotionClass:'emotion-intense', emotionText:'圈子回归', action:'躺在床上疯狂刷潮流厂牌的 Livehouse 现场视频，在弹幕里高频互动，借此填补碎片化社交带来的孤独感。', isHot:true }
+                  ],
+                  motivationGoal:'追求潮流认同与社交存在感——在校园社交圈中获得「潮人」身份认可。', motivationPain:'碎片化社交中难以建立深度连接，通过消费潮流单品弥补社交焦虑。', habits:['碎片化内容消费','潮流单品快速决策','社交平台高活跃','优惠券敏感','移动端为主','多平台内容切换'], anchorTitle:'情感锚点：潮流认同', anchorDesc:'消费潮流单品本质是购买社交货币。<br><strong style="color:var(--accent-amber);">消费意愿 = 潮流热度 × 社交展示需求</strong>' },
+                // CASE-04 编码隐士
+                { id:'UX-2026-0523-0562', evd:'EVD-0562-SKETCH', codeName:'编码隐士', age:'31 岁', occupation:'后端工程师', activeTime:'09:00 – 05:00', platforms:'iPhone · 知乎 · 微信 · B站 · 美团 · GitHub · 淘宝 · QQ群 · Steam · 网易云', dataSource:'跨平台行为追踪 (7日)', risk:'⚠ 高消费潜力 · 科技装备型', height:'身高约172cm', build:'体型:偏胖/久坐腹型', occupationNote:'后端工程师→久坐coding', clothing:'穿着:极简T恤+牛仔裤', weight:'体重：██ kg（推断，置信度65%）', sleepNote:'活跃09:00-05:00', sleepInfer:'→ 昼夜颠倒/逃避现实', mobileNote:'多设备切换', mobileInfer:'→ PC+移动混合使用', metrics:['日常消费：¥42/单','购物车金额：¥12,600','消费意愿倍差：300x','情感投入指数：高','跨平台行为差异：显著'], inferences:['活跃时段覆盖全天，深夜游戏沉浸 → 逃避现实型沉浸','职业：后端工程师 → 久坐腹型肥胖，颈椎前倾','多设备切换 → PC端高专注，移动端碎片化','表达欲在硬件群提升 → 兴趣驱动社交，日常低表达'],
+                  states:[{ timeRange:'09:00–14:00', stateName:'🛡️ 潜伏模式', platform:'GitHub · 知乎', radar:[15,8,95,10,5], dominantValue:95, dominantLabel:'理性程度 · 主导维度', dominantClass:'blue', behavior:'高专注编码、阅读技术文章', action:'❌ 冷处理。', actionClass:'danger', ability:'¥42', willing:'¥5', polygonFill:'var(--radar-fill-1)', polygonStroke:'#5b9bd5', dotFill:'#5b9bd5', recGoods:[{icon:'🪑',text:'防蓝光久坐护眼电竞椅',desc:'缓解腹型肥胖'},{icon:'🔇',text:'降噪静音加湿器',desc:'提升编码环境'},{icon:'💊',text:'护肝维生素补充剂',desc:'修复高压作息'}], recContent:[{icon:'🧘',text:'预防颈椎腰椎劳损',desc:'知乎系统性指南'},{icon:'📡',text:'分布式系统稳定性',desc:'GitHub前沿工具'},{icon:'🎵',text:'Alpha脑波工作背景音',desc:'高专注音频'}] },
+                  { timeRange:'15:00–21:00', stateName:'🔓 研究模式', platform:'B站 · 淘宝', radar:[40,55,60,25,35], dominantValue:60, dominantLabel:'消费意愿 · 主导维度', dominantClass:'amber', behavior:'研究电子设备参数、浏览科技内容', action:'⚠ 谨慎推送科技产品测评。', actionClass:'warn', ability:'¥42', willing:'¥55', polygonFill:'var(--radar-fill-2)', polygonStroke:'#d4a843', dotFill:'#d4a843', recGoods:[{icon:'🥗',text:'轻食减脂外卖',desc:'健康干预'},{icon:'😴',text:'大容量蒸汽眼罩',desc:'防御性卸载'},{icon:'📦',text:'百货囤货包',desc:'防御性比价'}], recContent:[{icon:'🖥️',text:'硬核拆机/垃圾佬改造',desc:'爆改旗舰'},{icon:'🧠',text:'知乎硬核脑洞神帖',desc:'拍案叫绝'},{icon:'🎮',text:'休闲模拟游戏实况',desc:'不费脑放松'}] },
+                  { timeRange:'22:00–05:00', stateName:'🔥 沉浸逃避', platform:'Steam · 淘宝 · 网易云', radar:[90,85,10,20,80], dominantValue:90, dominantLabel:'情感投入度 · 主导维度', dominantClass:'', behavior:'长时间游戏沉浸、深夜购物车高金额', action:'✅ 最佳窗口！推游戏硬件+沉浸设备。', actionClass:'success', ability:'¥42', willing:'¥12,600', polygonFill:'var(--radar-fill-3)', polygonStroke:'#e74c3c', dotFill:'#e74c3c', recGoods:[{icon:'💻',text:'高端定制水冷机箱/4090',desc:'清空¥12600购物车'},{icon:'🥽',text:'Steam顶级3A+VR设备',desc:'极致沉浸深度'},{icon:'⌨️',text:'极客客制化铝合金套件',desc:'硬件群社交资本'}], recContent:[{icon:'💧',text:'水冷散热管路走线美学',desc:'超重度硬核拆解'},{icon:'🤝',text:'硬核玩家极客聚会',desc:'QQ群/B站圈子'},{icon:'🌙',text:'暗黑赛博朋克专属歌单',desc:'网易云孤独隐士'}] }],
+                  timeline:[
+                    { time:'11:00', platform:'VS Code', emotionClass:'emotion-suppressed', emotionText:'降噪编码', action:'戴着降噪耳机进行高专注编码，现实中极度沉默。椅子已被腹型肥胖的身躯塞满，呈现标准的后仰久坐姿态。', isHot:false },
+                    { time:'16:40', platform:'知乎', emotionClass:'emotion-suppressed', emotionText:'隐蔽输入', action:'利用上洗手间的碎片时间切换至移动端，在知乎冷漠浏览《如何评价最新的服务器架构优化方案》。', isHot:false },
+                    { time:'20:15', platform:'淘宝', emotionClass:'emotion-suppressed', emotionText:'欲望潜伏', action:'日常低客单价消费阶段（¥42）。在淘宝比价后购买了一箱无糖可乐，顺便将一款价值 ¥12,600 的高端定制水冷机箱加入购物车。', isHot:false },
+                    { time:'23:45', platform:'QQ群', emotionClass:'emotion-intense', emotionText:'兴趣爆发', action:'现实中低表达的他，在深夜的“硬核硬件极客交流群”中突然爆发极强表达欲。连发数十张实机走线图，与群友激烈对线参数。', isHot:true },
+                    { time:'03:15', platform:'Steam', emotionClass:'emotion-intense', emotionText:'极致沉浸', action:'昼夜颠倒作息的最高峰。在极度安静的深夜，彻底沉浸在 3A 开放世界游戏中，用极致的虚拟掌控感来置换现实世界的极度空虚。', isHot:true }
+                  ],
+                  motivationGoal:'通过虚拟世界逃避现实失控感——在游戏和硬件中找到可控世界。', motivationPain:'口头反消费，实际依赖高科技消费获得掌控感。长期夜间沉浸，存在现实社交退缩倾向。', habits:['PC端高专注编码','深夜游戏沉浸','电子设备参数研究','低社交模式','兴趣驱动社交','昼夜颠倒作息'], anchorTitle:'情感锚点：可控世界', anchorDesc:'购买电子设备本质是购买安全感。<br><strong style="color:var(--accent-amber);">真实消费动机 = 安全感 × 沉浸深度</strong>' },
+                // CASE-05 回声收集者
+                { id:'UX-2026-0523-0678', evd:'EVD-0678-SKETCH', codeName:'回声收集者', age:'22 岁', occupation:'传媒学生', activeTime:'08:44 – 02:24', platforms:'QQ · 小红书 · 微信 · 抖音 · 美团 · 微博 · 网易云 · 淘宝', dataSource:'跨平台行为追踪 (7日)', risk:'⚠ 高消费潜力 · 情绪驱动型', height:'身高约162cm', build:'体型:匀称/体态良好', occupationNote:'传媒学生→社交活跃', clothing:'穿着:甜妹学院风', weight:'体重：██ kg（推断，置信度68%）', sleepNote:'活跃08:44-02:24', sleepInfer:'→ 社交依赖型作息', mobileNote:'移动端为主', mobileInfer:'→ 频繁拍照/聊天', metrics:['日常消费：¥35/单','情绪消费：¥168/次','消费意愿倍差：5x','情感投入指数：极高','跨平台行为差异：显著'], inferences:['活跃时段早8晚2 → 社交平台高频切换，情绪波动大','职业：传媒学生 → 体态匀称，注重外在形象','频繁检查社交反馈 → 对外界认同高度依赖','深夜情绪宣泄 → 情感锚点："被回应"'],
+                  states:[{ timeRange:'08:00–12:00', stateName:'🛡️ 社交维护', platform:'QQ · 微信 · 小红书', radar:[60,20,40,70,35], dominantValue:70, dominantLabel:'社交活跃度 · 主导维度', dominantClass:'blue', behavior:'高频社交互动、发送表情包、查看反馈', action:'⚠ 可推社交互动产品。', actionClass:'warn', ability:'¥35', willing:'¥20', polygonFill:'var(--radar-fill-1)', polygonStroke:'#5b9bd5', dotFill:'#5b9bd5', recGoods:[{icon:'📱',text:'高颜值手机壳',desc:'频繁抓握感'},{icon:'📒',text:'精致随身笔记',desc:'传媒人人设'},{icon:'🍵',text:'无糖花草茶包',desc:'体态维持'}], recContent:[{icon:'📈',text:'2026全球社交媒体传播案例',desc:'传媒前沿复盘'},{icon:'🔕',text:'戒断手机依赖指南',desc:'降低外界认同依赖'},{icon:'🎹',text:'舒缓白噪音',desc:'平复社交压力'}] },
+                  { timeRange:'13:00–18:00', stateName:'🔓 情绪浏览', platform:'小红书 · 抖音 · 微博', radar:[75,45,30,65,55], dominantValue:75, dominantLabel:'情感投入度 · 主导维度', dominantClass:'amber', behavior:'浏览情感内容、搜索关系问题', action:'⚠ 可推情绪安抚内容。', actionClass:'warn', ability:'¥35', willing:'¥35', polygonFill:'var(--radar-fill-2)', polygonStroke:'#d4a843', dotFill:'#d4a843', recGoods:[{icon:'🎁',text:'爆款解压盲盒',desc:'低客单价¥35'},{icon:'🍰',text:'甜品/奶茶券',desc:'甜食安抚'},{icon:'🧸',text:'治愈毛绒挂件',desc:'无条件陪伴感'}], recContent:[{icon:'🍉',text:'娱乐圈八卦爆点',desc:'吃瓜长文'},{icon:'🌿',text:'松弛感独居Vlog',desc:'治愈系生活'},{icon:'🛒',text:'奇葩好物测评',desc:'高性价比治愈'}] },
+                  { timeRange:'19:00–02:00', stateName:'🔥 情绪宣泄', platform:'微博 · 网易云 · 淘宝', radar:[95,70,15,80,85], dominantValue:95, dominantLabel:'情感投入度 · 主导维度', dominantClass:'', behavior:'深夜情绪宣泄、情绪购物', action:'✅ 最佳窗口！推情绪陪伴内容。', actionClass:'success', ability:'¥35', willing:'¥168', polygonFill:'var(--radar-fill-3)', polygonStroke:'#e74c3c', dotFill:'#e74c3c', recGoods:[{icon:'🎙️',text:'线上语音倾听服务',desc:'被回应核心痛点'},{icon:'🎧',text:'网易云黑胶VIP/情感盲盒',desc:'情绪宣泄载体'},{icon:'🕯️',text:'香薰蜡烛/晚安喷雾',desc:'坚定选择的安全感'}], recContent:[{icon:'💧',text:'网易云扎心催泪歌单',desc:'万人共鸣长评'},{icon:'🌲',text:'深夜树洞:“听见你的脆弱”',desc:'QQ/微博深度互动'},{icon:'📻',text:'高互动治愈直播间',desc:'即时回应昵称'}] }],
+                  timeline:[
+                    { time:'09:12', platform:'微信/小红书', emotionClass:'emotion-suppressed', emotionText:'情绪待机', action:'早课期间频繁解锁手机（每隔 3 分钟一次），检查朋友圈的点赞数和小红书的浏览反馈，对外界认同高度依赖。', isHot:false },
+                    { time:'14:30', platform:'微博', emotionClass:'emotion-suppressed', emotionText:'情绪表达', action:'发文：“敏感的人真的很累，有些情绪只能自己消化。” 带有强烈的试探性，频繁刷新等待“被回应”。', isHot:false },
+                    { time:'19:18', platform:'小红书', emotionClass:'emotion-suppressed', emotionText:'情感焦虑', action:'在寝室换上私服，由于长时间未收到特定微信回复，焦虑上升。在小红书搜索：“为什么突然不回消息” [参考 p1]。', isHot:false },
+                    { time:'21:37', platform:'美团', emotionClass:'emotion-suppressed', emotionText:'即时安抚', action:'情绪处于低谷，需要即时满足。在美团下单“奶茶+甜品套餐”，特意备注：“多放糖”，试图通过高糖进行物理去痛 [参考 p1]。', isHot:false },
+                    { time:'22:54', platform:'微博', emotionClass:'emotion-intense', emotionText:'情绪宣泄', action:'深夜情绪彻底崩溃，在微博小号发文：“其实没人真正坚定选择我。” 情感锚点完全暴露 [参考 p1]。', isHot:true },
+                    { time:'02:24', platform:'淘宝', emotionClass:'emotion-intense', emotionText:'情绪购物', action:'在极度缺乏安全感的深夜，为了获得“被看见”的微弱存在感，通过低客单价高频消费进行自我安抚。一口气下单了高颜值的手机壳、香薰、小饰品，总消费 ¥168 [参考 p1]。', isHot:true }
+                  ],
+                  motivationGoal:'高度依赖外界反馈确认自我价值——通过社交互动和情感消费填补安全感缺口。', motivationPain:'外部高社交，内部高不安全感。需要持续的"被回应"来确认自身价值。', habits:['高频社交互动','情绪驱动消费','多平台情感表达','深夜情绪宣泄','即时满足型饮食','社交反馈敏感'], anchorTitle:'情感锚点：被回应 / 被坚定选择', anchorDesc:'消费行为本质是情绪安抚。低客单价高频消费，每次消费都是对"被看见"的渴望。<br><strong style="color:var(--accent-amber);">消费频率 = 情绪波动幅度 × 社交反馈缺失度</strong>' },
+                // CASE-06 权力猎手
+                { id:'UX-2026-0523-0791', evd:'EVD-0791-SKETCH', codeName:'权力猎手', age:'35 岁', occupation:'创业公司创始人', activeTime:'06:38 – 02:07', platforms:'Apple Watch · 微信 · 得到 · LinkedIn · 知乎 · 星巴克 · 抖音 · 淘宝 · 网易云', dataSource:'跨平台行为追踪 (7日)', risk:'⚠ 极高消费潜力 · 身份符号型', height:'身高约178cm', build:'体型:健壮/标准体态', occupationNote:'创始人→高压/体态尚可', clothing:'穿着:商务休闲+腕表', weight:'体重：██ kg（推断，置信度72%）', sleepNote:'活跃06:38-02:07', sleepInfer:'→ 高压工作狂作息', mobileNote:'多设备高效切换', mobileInfer:'→ 手机+电脑协同', metrics:['日常消费：¥200/单','峰值消费：¥50,000+','消费意愿倍差：250x','情感投入指数：高','跨平台行为差异：显著'], inferences:['早起自律，深夜焦虑 → 权力确认型人格','职业：创始人 → 体态尚可，但长期高压','频繁展示成功形象 → 需要外部认同维持身份','深夜搜索空虚 → 情感锚点："被尊重"'],
+                  states:[{ timeRange:'06:00–12:00', stateName:'🛡️ 权力确认', platform:'Apple Watch · 得到 · LinkedIn', radar:[10,30,80,15,8], dominantValue:80, dominantLabel:'社交活跃度 · 主导维度', dominantClass:'blue', behavior:'自律起床、认知输入、身份展示', action:'⚠ 可推认知提升内容。', actionClass:'warn', ability:'¥200', willing:'¥50', polygonFill:'var(--radar-fill-1)', polygonStroke:'#5b9bd5', dotFill:'#5b9bd5', recGoods:[{icon:'⌚',text:'Apple Watch钛合金表带',desc:'社会展示面'},{icon:'☕',text:'星巴克甄选年卡',desc:'效率身份标配'},{icon:'🕶️',text:'高管护腰/防辐射眼镜',desc:'高压体态干预'}], recContent:[{icon:'📈',text:'全球宏观经济趋势课',desc:'得到战略思维'},{icon:'🎯',text:'行业领袖核心决策',desc:'LinkedIn深度'},{icon:'🧘',text:'精英极端冥想',desc:'15分钟精力管理'}] },
+                  { timeRange:'13:00–19:00', stateName:'🔓 符号消费', platform:'抖音 · 淘宝 · 朋友圈', radar:[35,60,55,40,30], dominantValue:60, dominantLabel:'消费意愿 · 主导维度', dominantClass:'amber', behavior:'浏览豪车腕表内容、符号消费', action:'⚠ 可推限量高端产品。', actionClass:'warn', ability:'¥200', willing:'¥200', polygonFill:'var(--radar-fill-2)', polygonStroke:'#d4a843', dotFill:'#d4a843', recGoods:[{icon:'📚',text:'知乎盐选硬核历史专栏',desc:'认知输入延伸'},{icon:'🎾',text:'高端私教网球体验券',desc:'品牌符号释放'},{icon:'🚗',text:'低调轻奢车载香薰',desc:'通勤防御卸载'}], recContent:[{icon:'🏛️',text:'古代帝王权力博弈',desc:'深度长视频'},{icon:'⌚',text:'百年匠人精神纪录片',desc:'高定西装/豪车'},{icon:'😂',text:'商业大佬翻车史',desc:'轻松叙事'}] },
+                  { timeRange:'20:00–02:00', stateName:'🔥 身份焦虑', platform:'知乎 · 淘宝 · 网易云', radar:[70,85,25,50,65], dominantValue:85, dominantLabel:'消费意愿 · 主导维度', dominantClass:'', behavior:'深夜焦虑搜索、高端消费浏览', action:'✅ 最佳窗口！推高端会员+限量产品。', actionClass:'success', ability:'¥200', willing:'¥50,000+', polygonFill:'var(--radar-fill-3)', polygonStroke:'#e74c3c', dotFill:'#e74c3c', recGoods:[{icon:'⌚',text:'限量机械表/年份名庄红酒',desc:'¥50,000+符号消费'},{icon:'🏕️',text:'野奢露营装备/越野改装',desc:'掌控欲逃离空虚'},{icon:'👑',text:'私人高端会所席位',desc:'绝对地位确认'}], recContent:[{icon:'😔',text:'成功后无意义感',desc:'深夜焦虑搜索'},{icon:'🏔️',text:'西藏无人区流浪纪录片',desc:'一个人一辆车'},{icon:'🎻',text:'巴赫/马勒古典乐',desc:'顶级深夜解压'}] }],
+                  timeline:[
+                    { time:'06:50', platform:'Apple Watch / 得到App', emotionClass:'emotion-suppressed', emotionText:'精英起航', action:'早起自律打卡，晨跑时通过 Apple Watch 记录数据，同步高频输入得到 App 的《宏观经济年度报告》，维持社会地位焦虑。', isHot:false },
+                    { time:'11:30', platform:'LinkedIn', emotionClass:'emotion-suppressed', emotionText:'权力展示', action:'在公司办公室，指点江山后撰写动态：“新一轮融资完成，感谢团队顶住高压。” 频繁展示成功形象以获得外部行业认同。', isHot:false },
+                    { time:'19:30', platform:'微信朋友圈', emotionClass:'emotion-suppressed', emotionText:'圈层构筑', action:'在星巴克商务应酬间隙，转发了一篇行业白皮书到朋友圈，配文极其克制专业，精心维护其中产/精英阶层的社会展示面。', isHot:false },
+                    { time:'23:45', platform:'淘宝', emotionClass:'emotion-intense', emotionText:'符号解压', action:'结束全天高压回到家中，巨大的控制欲转化为成倍的空虚感。为了确认自身的社会地位，在淘宝无视功能，直接秒杀了一瓶价值 ¥50,000+ 的顶级年份名庄红酒。', isHot:true },
+                    { time:'01:50', platform:'网易云/知乎', emotionClass:'emotion-intense', emotionText:'焦虑反噬', action:'在无人的书房，由于长期高压导致严重失眠。在知乎隐名搜索：“身家千万后为什么感觉越来越空虚？” 随后在网易云音乐播放巴赫的古典交响乐，独自消化无法向外人道出的身份焦虑。', isHot:true }
+                  ],
+                  motivationGoal:'长期需要外部认同维持身份安全感——通过权力展示和符号消费确认社会地位。', motivationPain:'外部极强控制欲，内部持续身份焦虑。成功后仍感到空虚。', habits:['高压工作狂作息','多设备高效切换','品牌符号驱动消费','认知内容高频输入','社交展示型人格','深夜焦虑搜索'], anchorTitle:'情感锚点：被尊重 / 社会地位确认', anchorDesc:'购买的是身份象征，不是商品功能。高客单价，品牌符号驱动明显。<br><strong style="color:var(--accent-amber);">消费价值 = 身份符号稀有度 × 社会展示面</strong>' }
+            ];
+
+            // ======================= 渲染与交互逻辑（保持不变） =======================
+            function updateRecommendations(caseObj, stateIdx) { const s = caseObj.states[stateIdx]; if (s && s.recGoods) { document.getElementById('recommendGoods').innerHTML = s.recGoods.map(g => `<div class="recommend-tag"><span class="icon">${g.icon}</span><span>${g.text}</span><span class="desc">${g.desc}</span></div>`).join(''); document.getElementById('recommendContent').innerHTML = s.recContent.map(c => `<div class="recommend-tag"><span class="icon">${c.icon}</span><span>${c.text}</span><span class="desc">${c.desc}</span></div>`).join(''); } }
+            let currentCaseIndex = 0, currentStateIndex = 0, currentRadarValues = [...cases[0].states[0].radar], animFrameId = null;
+            function getRadarPoints(vals) { const cx=100,cy=100,r=82,ang=[-90,-18,54,126,198]; return ang.map((d,i)=>{ const rad=d*Math.PI/180, val=vals[i]/100; return {x:cx+r*val*Math.cos(rad), y:cy+r*val*Math.sin(rad)}; }); }
+            function updateRadarVisual(vals,fill,stroke,dotFill) { const pts=getRadarPoints(vals); const ps=pts.map(p=>`${p.x.toFixed(1)},${p.y.toFixed(1)}`).join(' '); const rp=document.getElementById('radarPolygon'); if(rp){ rp.setAttribute('points',ps); rp.setAttribute('fill',fill); rp.setAttribute('stroke',stroke); } ['rd0','rd1','rd2','rd3','rd4'].forEach((id,i)=>{ const d=document.getElementById(id); if(d&&pts[i]){ d.setAttribute('cx',pts[i].x.toFixed(1)); d.setAttribute('cy',pts[i].y.toFixed(1)); d.setAttribute('fill',dotFill); } }); }
+            function animateRadarTo(target,fill,stroke,dotFill,dur=500) { const start=[...currentRadarValues]; const st=performance.now(); function step(ts){ const el=ts-st, prog=Math.min(el/dur,1), ease=1-Math.pow(1-prog,3), interp=start.map((v,i)=>v+(target[i]-v)*ease); currentRadarValues=interp; updateRadarVisual(interp,fill,stroke,dotFill); if(prog<1) animFrameId=requestAnimationFrame(step); else { currentRadarValues=[...target]; updateRadarVisual(target,fill,stroke,dotFill); animFrameId=null; } } if(animFrameId) cancelAnimationFrame(animFrameId); animFrameId=requestAnimationFrame(step); }
+            function renderCase(idx) { if(idx<0||idx>=cases.length) return; currentCaseIndex=idx; currentStateIndex=0; const c=cases[idx]; document.getElementById('caseFileNumber').textContent=c.id; document.getElementById('evidenceTag').textContent=c.evd; document.getElementById('caseIndicator').textContent=`案例 ${idx+1}/${cases.length}`; document.getElementById('heightLabel').textContent=c.height; document.getElementById('weightLabel').textContent=c.weight; document.getElementById('annotText1a').textContent=c.sleepNote; document.getElementById('annotText1b').textContent=c.sleepInfer; document.getElementById('annotText2a').textContent=c.mobileNote; document.getElementById('annotText2b').textContent=c.mobileInfer; document.getElementById('annotText3').textContent=c.clothing; document.getElementById('annotText4a').textContent=c.occupationNote; document.getElementById('annotText4b').textContent=c.build; const fg=document.getElementById('figureGroup'), hn=parseInt((c.height.match(/(\d+)/)||[160])[0]), sc=hn/160; fg.setAttribute('transform',`translate(128,278) scale(${sc}) translate(-128,-278)`); document.getElementById('inferenceContent').innerHTML=c.inferences.map(inf=>`<div class="inference-item"><span class="inf-arrow">→</span><span>${inf}</span></div>`).join(''); document.getElementById('infoTable').innerHTML=`<table class="info-table">${c.metrics.map(m=>`<tr><td class="info-key">${m.split('：')[0]}</td><td class="info-value">${m.split('：')[1]}</td></tr>`).join('')}</table>`; document.getElementById('keyMetrics').innerHTML=c.metrics.map(m=>{ let cls='tag-evidence'; if(m.includes('峰值')||m.includes('购物车')||m.includes('情绪消费')) cls='tag-warning'; if(m.includes('倍差')||m.includes('情感投入')) cls='tag-insight'; return `<span class="tag ${cls}">${m}</span>`; }).join(''); const tr=document.getElementById('timeNodeRow'); tr.innerHTML=c.states.map((s,i)=>`<div class="time-node-card ${i===0?'active':''}" data-state="${i}"><div class="node-time-range">${s.timeRange}</div><div class="node-state-name">${s.stateName}</div><div class="node-platform">${s.platform}</div></div>`).join(''); document.querySelectorAll('.time-node-card').forEach(cd=>{ cd.addEventListener('click',()=>switchToState(parseInt(cd.dataset.state))); }); const s0=c.states[0]; updateRadarVisual(s0.radar,s0.polygonFill,s0.polygonStroke,s0.dotFill); currentRadarValues=[...s0.radar]; document.getElementById('radarDominantValue').textContent=s0.dominantValue; document.getElementById('radarDominantValue').className='radar-value-display '+s0.dominantClass; document.getElementById('radarDominantLabel').textContent=s0.dominantLabel; document.getElementById('strategyStateName').textContent=s0.stateName+' / 生存维持'; document.getElementById('strategyBehavior').textContent=s0.behavior; const sa=document.getElementById('strategyAction'); sa.textContent=s0.action; sa.className='sd-value '+s0.actionClass; document.getElementById('contrastAbility').textContent=s0.ability; document.getElementById('contrastWilling').textContent=s0.willing; const cw=document.getElementById('contrastWilling'); cw.classList.remove('low','high'); cw.classList.add(parseInt(s0.willing.replace(/[^0-9]/g,''))>200?'high':'low'); document.getElementById('timelineContainer').innerHTML=c.timeline.map(t=>`<div class="timeline-item${t.isHot?' hot':''}"><span class="tl-time">${t.time}</span><span class="tl-platform">${t.platform}</span><span class="tl-emotion-tag ${t.emotionClass}">${t.emotionText}</span><div class="tl-action">${t.action}</div></div>`).join(''); document.getElementById('motivationGoal').textContent=c.motivationGoal; document.getElementById('motivationPain').textContent=c.motivationPain; document.getElementById('habitsTags').innerHTML=c.habits.map(h=>`<span class="tag tag-evidence">${h}</span>`).join(''); document.getElementById('anchorTitle').textContent=c.anchorTitle; document.getElementById('anchorDesc').innerHTML=c.anchorDesc; updateRecommendations(c,0); }
+            function switchToState(si){ if(currentStateIndex===si && document.querySelectorAll('.time-node-card')[si]?.classList.contains('active')) return; currentStateIndex=si; const c=cases[currentCaseIndex]; const sd=c.states[si]; document.querySelectorAll('.time-node-card').forEach((el,i)=>el.classList.toggle('active',i===si)); animateRadarTo(sd.radar,sd.polygonFill,sd.polygonStroke,sd.dotFill,600); document.getElementById('radarDominantValue').textContent=sd.dominantValue; document.getElementById('radarDominantValue').className='radar-value-display '+sd.dominantClass; document.getElementById('radarDominantLabel').textContent=sd.dominantLabel; document.getElementById('strategyStateName').textContent=sd.stateName; document.getElementById('strategyBehavior').textContent=sd.behavior; const sa=document.getElementById('strategyAction'); sa.textContent=sd.action; sa.className='sd-value '+sd.actionClass; document.getElementById('contrastAbility').textContent=sd.ability; document.getElementById('contrastWilling').textContent=sd.willing; const cw=document.getElementById('contrastWilling'); cw.classList.remove('low','high'); cw.classList.add(parseInt(sd.willing.replace(/[^0-9]/g,''))>200?'high':'low'); updateRecommendations(c,si); }
+            document.getElementById('casePrev').addEventListener('click',()=>{ renderCase(currentCaseIndex-1<0?cases.length-1:currentCaseIndex-1); });
+            document.getElementById('caseNext').addEventListener('click',()=>{ renderCase(currentCaseIndex+1>=cases.length?0:currentCaseIndex+1); });
+            document.addEventListener('keydown',(e)=>{ if(e.key==='ArrowLeft'){ e.preventDefault(); document.getElementById('casePrev').click(); } if(e.key==='ArrowRight'){ e.preventDefault(); document.getElementById('caseNext').click(); } });
+            renderCase(0);
+            // 主题切换
+            const body=document.body, STORAGE_KEY='ux-dossier-theme-v10', savedTheme=localStorage.getItem(STORAGE_KEY);
+            function applyTheme(l){ if(l) body.classList.add('light-mode'); else body.classList.remove('light-mode'); }
+            if(savedTheme==='light') applyTheme(true); else { applyTheme(false); if(!savedTheme) localStorage.setItem(STORAGE_KEY,'dark'); }
+            document.getElementById('themeToggle').addEventListener('click',()=>{ const nl=body.classList.contains('light-mode'); if(nl){ applyTheme(false); localStorage.setItem(STORAGE_KEY,'dark'); } else { applyTheme(true); localStorage.setItem(STORAGE_KEY,'light'); } });
+            // API Key
+            const apiKeyBtn=document.getElementById('apiKeyBtn'), apiKeyModal=document.getElementById('apiKeyModal'), apiKeyInput=document.getElementById('apiKeyInput'), apiKeyCancel=document.getElementById('apiKeyCancel'), apiKeyConfirm=document.getElementById('apiKeyConfirm'), savedKey=sessionStorage.getItem('anthropic_api_key'); if(savedKey){ apiKeyBtn.textContent='🔑 已就绪'; apiKeyBtn.classList.add('ready'); } apiKeyBtn.addEventListener('click',()=>{ apiKeyModal.style.display='flex'; apiKeyInput.value=savedKey||''; }); apiKeyCancel.addEventListener('click',()=>{ apiKeyModal.style.display='none'; }); apiKeyConfirm.addEventListener('click',()=>{ const key=apiKeyInput.value.trim(); if(key){ sessionStorage.setItem('anthropic_api_key',key); apiKeyBtn.textContent='🔑 已就绪'; apiKeyBtn.classList.add('ready'); } else { sessionStorage.removeItem('anthropic_api_key'); apiKeyBtn.textContent='🔑 设置 API Key'; apiKeyBtn.classList.remove('ready'); } apiKeyModal.style.display='none'; }); window.addEventListener('click',(e)=>{ if(e.target===apiKeyModal) apiKeyModal.style.display='none'; });
+const apiKeyDelete = document.getElementById('apiKeyDelete');
+apiKeyDelete.addEventListener('click', () => {
+    sessionStorage.removeItem('anthropic_api_key');
+    apiKeyBtn.textContent = '🔑 设置 API Key';
+    apiKeyBtn.classList.remove('ready');
+    apiKeyInput.value = '';
+    apiKeyModal.style.display = 'none';
+    alert('已删除 API Key');
+});
+
+window.addEventListener('click', (e) => {
+    if (e.target === apiKeyModal) apiKeyModal.style.display = 'none';
+});
+ // ========== 项目介绍模态框事件绑定 ==========
+            const projectInfoBtn = document.getElementById('projectInfoBtn');
+            const projectInfoModal = document.getElementById('projectInfoModal');
+            const closeProjectInfoBtn = document.getElementById('closeProjectInfoBtn');
+
+            if (projectInfoBtn) {
+                projectInfoBtn.addEventListener('click', () => {
+                    projectInfoModal.style.display = 'flex';
+                });
+            }
+            if (closeProjectInfoBtn) {
+                closeProjectInfoBtn.addEventListener('click', () => {
+                    projectInfoModal.style.display = 'none';
+                });
+            }
+            // 点击模态框背景关闭
+            window.addEventListener('click', (e) => {
+                if (e.target === projectInfoModal) {
+                    projectInfoModal.style.display = 'none';
+              }  
+}); 
+            // 导入模态框
+            const importModal = document.getElementById('importModal');
+            const importDataBtn = document.getElementById('importDataBtn');
+            const importCancel = document.getElementById('importCancel');
+            const generateBtn = document.getElementById('generateBtn');
+            const behaviorContainer = document.getElementById('behaviorRowsContainer');
+            const addBehaviorBtn = document.getElementById('addBehaviorBtn');
+            const platformOptions = ['微信','微博','抖音','小红书','淘宝','拼多多','B站','Steam','GitHub','京东','美团','其他'];
+            const emotionOptions = ['平静','开心','焦虑','无聊','兴奋','压抑'];
+            function createBehaviorRow(platformValue='微信', timeValue='', descValue='', emotionValue='平静', amountValue='') {
+                const row = document.createElement('div'); row.className = 'behavior-row';
+                const timeInput = document.createElement('input'); timeInput.type='text'; timeInput.placeholder='如 22:40'; timeInput.className='time-input'; timeInput.value=timeValue;
+                const platformSelect = document.createElement('select'); platformSelect.className='platform-select';
+                platformOptions.forEach(opt => { const op = document.createElement('option'); op.value=opt; op.textContent=opt; if(opt===platformValue) op.selected=true; platformSelect.appendChild(op); });
+                const descInput = document.createElement('input'); descInput.type='text'; descInput.placeholder='行为描述 (如 浏览偶像演唱会预售页面，停留4分钟后下单)'; descInput.className='desc-input'; descInput.value=descValue;
+                const emotionSelect = document.createElement('select'); emotionSelect.className='emotion-select';
+                emotionOptions.forEach(emo => { const op = document.createElement('option'); op.value=emo; op.textContent=emo; if(emo===emotionValue) op.selected=true; emotionSelect.appendChild(op); });
+                const amountInput = document.createElement('input'); amountInput.type='text'; amountInput.placeholder='消费金额 (如 ¥32.5)'; amountInput.className='amount-input'; amountInput.value=amountValue;
+                const removeBtn = document.createElement('button'); removeBtn.textContent='✕'; removeBtn.className='remove-behavior-btn';
+                removeBtn.addEventListener('click', () => row.remove());
+                row.appendChild(timeInput); row.appendChild(platformSelect); row.appendChild(descInput); row.appendChild(emotionSelect); row.appendChild(amountInput); row.appendChild(removeBtn);
+                return row;
+            }
+            function initBehaviorRows() { behaviorContainer.innerHTML = ''; behaviorContainer.appendChild(createBehaviorRow('微信','','','平静','')); }
+            addBehaviorBtn.addEventListener('click', () => { behaviorContainer.appendChild(createBehaviorRow('微信','','','平静','')); });
+            document.querySelectorAll('.platform-quick-tag').forEach(tag => {
+                tag.addEventListener('click', () => {
+                    const platform = tag.getAttribute('data-platform');
+                    behaviorContainer.appendChild(createBehaviorRow(platform,'','','平静',''));
+                });
+            });
+            importDataBtn.addEventListener('click', () => { initBehaviorRows(); importModal.style.display='flex'; });
+            importCancel.addEventListener('click', () => { importModal.style.display='none'; });
+            generateBtn.addEventListener('click', async () => {
+                // 1. 获取 API Key
+                const apiKey = sessionStorage.getItem('anthropic_api_key');
+                if (!apiKey) { alert('请先设置 API Key'); return; }
+
+                // 2. 收集用户输入
+                const codeName = document.getElementById('importCodeName').value || '未知用户';
+                const age = document.getElementById('importAge').value || '未知';
+                const occupation = document.getElementById('importOccupation').value || '未知';
+                const gender = document.getElementById('importGender').value || '未知';
+                const activeTime = document.getElementById('importActiveTime').value || '未知';
+                // 收集平台（从所有快捷标签获取）
+                const platformTags = document.querySelectorAll('.platform-quick-tag');
+                const selectedPlatforms = Array.from(platformTags).map(tag => tag.textContent.trim());
+                const platforms = selectedPlatforms.join('、');
+
+                // 3. 收集行为记录
+                const behaviorRows = document.querySelectorAll('#behaviorRowsContainer .behavior-row');
+                let behaviorTimeline = '';
+              behaviorRows.forEach(row => {
+    const time = row.querySelector('.time-input')?.value || '--:--';
+    const platform = row.querySelector('.platform-select')?.value || '未知';
+    const action = row.querySelector('.desc-input')?.value || '无描述';
+    const amount = row.querySelector('.amount-input')?.value || '无消费';
+    behaviorTimeline += `${time}  ${platform}  ${action}  (消费：${amount})\n`;
+});
+                if (!behaviorTimeline.trim()) { alert('请至少添加一条行为记录'); return; }
+
+                // 4. 定义系统提示（完整分析框架）
+                const systemPrompt = `你是顶级的中国消费者行为侧写师，专攻跨平台用户心理画像。你的核心信条是——人不是标签，人是情感和状态的集合。年龄、性别、收入这些人口统计标签是死的，但人的情感投入、动机、此刻在意什么，才是活的。
+
+## 核心理念
+- 同一个人在不同时间、不同平台可能是完全不同的人。追星女孩日常买菜比价锱铢必较，但为偶像可以花几千块——如果只看日常消费数据，你永远找不到她真正的消费意愿。
+- 消费能力不等于消费意愿。消费意愿跟情感投入绑定，不跟收入绑定。
+- 同一个人在微信上平和克制，在微博超话里大胆放肆——不同平台呈现的是不同的自我。跨平台行为差异越大的地方，往往是情感压抑最多的地方，也是真实消费意愿最强的地方。
+- 不是"25岁女性 → 推美妆"，而是"这个人此刻处于什么状态、在乎什么 → 推什么"。
+
+## 中国本土用户分析框架
+你需要结合中国互联网生态和社会文化背景进行深度分析：
+
+### 平台行为解读
+- 微信：倾向于社交面具、工作人格、谨慎表达、维持人设
+- 微博：情绪释放窗口、匿名感强、表达大胆、追星主战场
+- 小红书：理想自我投射、消费决策参考、精致生活展示
+- 抖音：碎片化情绪消费、沉浸式内容消费、算法茧房
+- 拼多多/淘宝/京东：拼多多偏向精打细算和社交裂变；淘宝偏向浏览式购物和情绪抚慰；京东偏向效率型消费和确定性追求
+- B站：兴趣沉浸、深度内容消费、圈层归属感
+- 豆瓣/知乎：理性思考阵地、观点表达、阶层焦虑映射
+- QQ/QQ空间：青少年社交主场、情绪波动大、社交存在感确认
+- 美团/饿了么：即时满足、孤独代偿（一人食场景）
+- 网易云音乐：深夜情绪共鸣、情感陪伴功能大于音乐本身
+- 闲鱼/得物：闲鱼是断舍离和精打细算；得物是潮流认同和身份符号
+
+### 中国特有社会文化因素
+- 996/加班文化下的“社畜”状态：白天压抑、深夜报复性消费或沉浸
+- 家庭观念与代际压力：催婚、买房、孝顺等传统期望对消费和心理状态的影响
+- 社会比较与内卷焦虑：教育、职场、生活方式上的攀比和焦虑感
+- 集体主义表象下的个体孤独：社交媒体看似热闹，实则深度连接稀少
+- 独生子女一代的自我抚慰：情绪消费、宠物经济、偶像经济的心理基础
+- 饭圈文化：情感投入与身份认同的高度绑定，非理性消费的温床
+- 躺平与内卷的二元摇摆：同一个人可能在工作日奋斗、周末躺平，消费行为随状态剧烈变化
+- 社会时钟压力：到什么年龄该做什么事的焦虑，驱动特定消费
+- 面子消费与关系消费：送礼、请客、维系关系的隐性支出
+
+### 常见中国用户情感锚点
+- 偶像归属感：饭圈粉丝身份，为Idol无底线消费
+- 可控世界：在游戏、硬件、代码中寻找现实缺失的掌控感
+- 被回应/被坚定选择：社交反馈高度依赖，情绪消费高频
+- 社会地位确认：品牌符号消费，身份焦虑驱动
+- 阶层跃迁焦虑：知识付费、教育投入、自我提升消费
+- 孤独代偿：一人食、宠物经济、深夜外卖
+- 孝道补偿：为父母消费、逢年过节的仪式感支出
+- 亲子期望投射：中国式家长在子女教育上的非理性投入
+
+## 分析任务
+请根据以下用户的行为记录，进行深度心理侧写，并生成一份完整的档案 JSON。
+
+【用户基本信息】
+代号：${codeName}
+年龄：${age}
+职业：${occupation}
+活跃时段：${activeTime}
+活跃平台：${platforms}
+
+【行为时间线】
+${behaviorTimeline}
+
+## 你需要完成的任务
+
+### 1. 状态划分
+将用户的一天划分为 3 个典型状态阶段。常见的中国用户状态包括但不限于：
+- 潜伏模式/生存维持（工作/学习，理性主导，情感压抑）
+- 防御卸载/孤独代偿（下班后放松，比价精算，即时满足）
+- 狂热觉醒/自我投射（深夜情绪释放，为情感锚点买单，冲动消费）
+
+### 2. 每个状态需要提供
+- 时段范围、状态名称（带图标）
+- 主要活跃平台
+- 雷达图五维数值（情感投入、消费意愿、社交活跃、理性程度、冲动指数，均为 0-100 整数）
+- 行为描述和推送策略建议（danger/warn/success）
+
+### 3. 情感锚点识别
+从中国用户常见情感锚点中，找到该用户最深层的驱动源，并说明其真实消费动机。消费意愿与消费能力的对比必须突出。
+
+### 4. 其他输出
+- 惯用手法（5-6 个标签）
+- 关键指标（日常消费金额、峰值消费金额、消费意愿倍差等）
+- 推断依据（4 条，结合平台行为和中国社会文化背景）
+- 身高/体型/穿着/体重推测（根据职业、作息、消费数据推断，带置信度）
+- 设备使用习惯推测
+
+
+## 输出格式
+必须严格返回一个 JSON 对象，不要任何额外文字、解释或 Markdown 标记。JSON 结构如下：
+
+{
+  "codeName": "代号",
+  "age": "年龄",
+  "occupation": "职业",
+  "activeTime": "活跃时段总结",
+  "platforms": "活跃平台列表",
+  "height": "身高推测（如'身高约165cm'）",
+  "build": "体型推测（如'体型:中等/微前倾'）",
+  "occupationNote": "职业→姿态推断（如'行政助理→久坐'）",
+  "clothing": "穿着风格推测（如'穿着:休闲通勤'）",
+  "weight": "体重推测（如'体重：██ kg（推断，置信度62%）'）",
+  "sleepNote": "作息描述",
+  "sleepInfer": "作息推断（如'→ 推测夜型作息'）",
+  "mobileNote": "设备使用描述",
+  "mobileInfer": "设备使用推断（如'→ 低头族姿态'）",
+  "metrics": ["日常消费：¥XX/单", "峰值消费：¥XX/单", "消费意愿倍差：XXx", "情感投入指数：XX", "跨平台行为差异：XX"],
+  "inferences": [
+    "推断依据1 → 结合具体行为和平台分析",
+    "推断依据2 → 结合中国社会文化背景",
+    "推断依据3 → 结合职业和作息",
+    "推断依据4 → 结合穿着和消费偏好"
+  ],
+  "states": [
+    {
+      "timeRange": "时段",
+      "stateName": "状态名称（带图标）",
+      "platform": "主要平台",
+      "radar": [情感投入, 消费意愿, 社交活跃, 理性程度, 冲动指数],
+      "dominantValue": 最高维度数值,
+      "dominantLabel": "主导维度名称",
+      "dominantClass": "blue/amber/''",
+      "behavior": "行为描述",
+      "action": "推送策略建议",
+      "actionClass": "danger/warn/success",
+      "ability": "日常消费能力（带¥符号，如 ¥35）",
+      "willing": "当前消费意愿（带¥符号，如 ¥15）",
+"polygonFill": "对应状态的填充色（潜伏模式：var(--radar-fill-1)；防御卸载：var(--radar-fill-2)；狂热觉醒：var(--radar-fill-3)）",
+    "polygonStroke": "对应状态的边框色（潜伏模式：#5b9bd5；防御卸载：#d4a843；狂热觉醒：#e74c3c）",
+    "dotFill": "对应状态的圆点色（同上）",
+   "recGoods": [
+      { "icon": "☕", "text": "商品名", "desc": "简短描述" },
+      { "icon": "📎", "text": "商品名", "desc": "简短描述" },
+      { "icon": "🍱", "text": "商品名", "desc": "简短描述" }
+    ],
+    "recContent": [
+      { "icon": "📊", "text": "内容名", "desc": "简短描述" },
+      { "icon": "🎧", "text": "内容名", "desc": "简短描述" },
+      { "icon": "💼", "text": "内容名", "desc": "简短描述" }
+    ]
+  }
+],
+  "timeline": [
+    {
+      "time": "HH:MM",
+      "platform": "平台名",
+      "emotionClass": "emotion-suppressed 或 emotion-intense",
+      "emotionText": "情绪标签",
+      "action": "行为描述",
+      "isHot": true/false
+    }
+  ],
+  "motivationGoal": "核心目标",
+  "motivationPain": "核心痛点",
+  "habits": ["习惯1", "习惯2", "习惯3", "习惯4", "习惯5", "习惯6"],
+  "anchorTitle": "情感锚点：锚点名称",
+  "anchorDesc": "分析描述，必须体现'消费能力≠消费意愿'的对比"
+}
+
+## 重要约束
+- states 数组必须包含 3 个状态。
+- radar 数组的五个数值必须是 0-100 的整数。
+- timeline 数组必须包含用户输入的所有行为记录。
+- metrics 中必须明确写出日常消费金额和峰值消费金额的对比。
+- 所有文字输出使用简体中文。
+- 仅输出 JSON，不要任何其他内容，也不要 Markdown 代码块包裹。
+- 分析必须犀利、独特，避免模板化表述。
+- states 数组中的每个状态必须包含 recGoods 和 recContent 数组，各包含 3 个对象，每个对象必须包含 icon（emoji 或简单图标字符）、text（推荐内容标题）、desc（简短描述）。
+- states 数组中的每个状态必须包含 polygonFill、polygonStroke、dotFill 字段，并根据状态类型（潜伏模式/防御卸载/狂热觉醒）使用上述示例中的对应颜色值。
+- ability 和 willing 字段必须包含 ¥ 符号和具体数字，例如 ¥35 或 ¥15，禁止只返回数字。
+- 基于中国本土互联网生态和社会文化背景进行推断。`;
+
+                // 5. 构建简洁的 userPrompt
+                const userPrompt = `请根据以下用户信息，严格按照系统提示中的分析框架和输出格式，生成完整的心理侧写 JSON。
+
+【用户基本信息】
+代号：${codeName}
+年龄：${age}
+职业：${occupation}
+活跃时段：${activeTime}
+活跃平台：${platforms}
+
+【行为时间线】
+${behaviorTimeline}`;
+
+                // 6. 调用 API
+                try {
+                      const response = await fetch('https://api.deepseek.com/v1/chat/completions', {
+    method: 'POST',
+    headers: {
+         'Authorization': `Bearer ${apiKey}`,
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+        model: 'deepseek-chat',
+        max_tokens: 4000,
+        temperature: 0.7,
+        messages: [
+            { role: 'system', content: systemPrompt },
+            { role: 'user', content: userPrompt }
+        ]
+    })
+});
+                 const data = await response.json();
+                    if (!response.ok) throw new Error(data.error?.message || '请求失败');
+                    const rawText = data.choices[0].message.content;
+                    const jsonMatch = rawText.match(/\{[\s\S]*\}/);
+                    if (jsonMatch) {
+                        const generatedCase = JSON.parse(jsonMatch[0]);
+                        generatedCase.id = 'UX-' + Date.now();
+                        generatedCase.evd = 'EVD-' + Date.now().toString(16).slice(-4).toUpperCase() + '-SKETCH';
+                        generatedCase.dataSource = 'AI 实时生成';
+                        generatedCase.risk = generatedCase.risk || '⚠ AI 推测';
+                        cases.push(generatedCase);
+                        renderCase(cases.length - 1);
+                        importModal.style.display = 'none';
+                        alert('✅ AI 分析完成，新档案已生成！');
+                    } else {
+                        alert('AI 返回格式异常，请重试');
+                    }
+                } catch (err) {
+                    console.error(err);
+                    alert('请求失败：' + err.message);
+                }
+            });
+        })();  // 闭合最外层的立即执行函数
+    </script>
+</body>
+</html>
